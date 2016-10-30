@@ -40,10 +40,10 @@ class CExprExecuteImpl {
 
  private:
   CExpr*          expr_;
-  CExprTokenStack ctoken_stack_;
-  uint            ctoken_pos_;
-  uint            num_ctokens_;
-  CExprTokenStack etoken_stack_;
+  CExprTokenStack ctokenStack_;
+  uint            ctokenPos_;
+  uint            numCTokens_;
+  CExprTokenStack etokenStack_;
 };
 
 //------------
@@ -80,28 +80,28 @@ bool
 CExprExecuteImpl::
 executeCTokenStack(const CExprTokenStack &stack, CExprValueArray &values)
 {
-  ctoken_stack_ = stack;
+  ctokenStack_ = stack;
 
-  etoken_stack_.clear();
+  etokenStack_.clear();
 
-  num_ctokens_ = ctoken_stack_.getNumTokens();
-  ctoken_pos_  = 0;
+  numCTokens_ = ctokenStack_.getNumTokens();
+  ctokenPos_  = 0;
 
-  while (ctoken_pos_ < num_ctokens_) {
-    CExprTokenBaseP ctoken = ctoken_stack_.getToken(ctoken_pos_++);
+  while (ctokenPos_ < numCTokens_) {
+    CExprTokenBaseP ctoken = ctokenStack_.getToken(ctokenPos_++);
 
     if (! executeToken(ctoken))
       return false;
 
     if (expr_->getDebug())
-      std::cerr << "EToken Stack:" << etoken_stack_ << std::endl;
+      std::cerr << "EToken Stack:" << etokenStack_ << std::endl;
   }
 
   std::deque<CExprValuePtr> values1;
 
   bool rc = true;
 
-  while (! etoken_stack_.empty()) {
+  while (! etokenStack_.empty()) {
     CExprValuePtr value = unstackValue();
 
     if (value.isValid())
@@ -646,8 +646,8 @@ stackBlock()
 
   int brackets = 1;
 
-  while (ctoken_pos_ < num_ctokens_) {
-    CExprTokenBaseP ctoken = ctoken_stack_.getToken(ctoken_pos_++);
+  while (ctokenPos_ < numCTokens_) {
+    CExprTokenBaseP ctoken = ctokenStack_.getToken(ctokenPos_++);
 
     if (! ctoken.isValid())
       break;
@@ -677,7 +677,7 @@ void
 CExprExecuteImpl::
 stackEToken(const CExprTokenBaseP &base)
 {
-  etoken_stack_.addToken(base);
+  etokenStack_.addToken(base);
 }
 
 CExprValuePtr
@@ -696,7 +696,7 @@ CExprTokenBaseP
 CExprExecuteImpl::
 unstackEToken()
 {
-  CExprTokenBaseP etoken = etoken_stack_.pop_back();
+  CExprTokenBaseP etoken = etokenStack_.pop_back();
 
   return etoken;
 }

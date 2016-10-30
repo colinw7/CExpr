@@ -1,6 +1,8 @@
 #ifndef CExprTokenStack_H
 #define CExprTokenStack_H
 
+#include <CExprTokenBase.h>
+
 class CExprTokenStack {
  public:
   CExprTokenStack() { }
@@ -53,6 +55,8 @@ class CExprTokenStack {
 
     return token;
   }
+
+  bool hasFunction(const std::string &name) const;
 
   void print(std::ostream &os) const;
 

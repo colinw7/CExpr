@@ -356,7 +356,7 @@ class CExprPrintF : public CPrintF {
     return values_[iv_++];
   }
 
-  private:
+ private:
   std::string     fmt_;
   CExprValueArray values_;
   mutable uint    iv_;

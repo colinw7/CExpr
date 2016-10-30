@@ -50,6 +50,8 @@ class CExprFunction {
 
   virtual bool checkValues(const CExprValueArray &) const { return true; }
 
+  virtual bool hasFunction(const std::string &) const { return false; }
+
   virtual void reset() { }
 
   virtual CExprValuePtr exec(CExpr *expr, const CExprValueArray &values) = 0;
@@ -142,7 +144,13 @@ class CExprUserFunction : public CExprFunction {
 
   void reset() override;
 
+  bool isCompiled() const { return compiled_; }
+
   CExprValuePtr exec(CExpr *expr, const CExprValueArray &values) override;
+
+  bool hasFunction(const std::string &name) const override {
+    return compiled_ && cstack_.hasFunction(name);
+  }
 
   void print(std::ostream &os, bool expanded=true) const override {
     os << name_ << "(";
@@ -162,7 +170,7 @@ class CExprUserFunction : public CExprFunction {
  private:
   Args                    args_;
   std::string             proc_;
-  mutable bool            compiled_;
+  mutable bool            compiled_ { false };
   mutable CExprTokenStack pstack_;
   mutable CExprITokenPtr  itoken_;
   mutable CExprTokenStack cstack_;

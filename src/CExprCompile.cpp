@@ -6,6 +6,8 @@ class CExprCompileImpl {
 
   CExprTokenStack compileIToken(CExprITokenPtr itoken);
 
+  bool hasFunction(const std::string &name) const;
+
  private:
   void compileIToken1                 (CExprITokenPtr itoken);
   void compileExpression              (CExprITokenPtr itoken);
@@ -66,6 +68,13 @@ CExprCompile::
 compileIToken(CExprITokenPtr itoken)
 {
   return impl_->compileIToken(itoken);
+}
+
+bool
+CExprCompile::
+hasFunction(const std::string &name) const
+{
+  return impl_->hasFunction(name);
 }
 
 //------
@@ -1028,4 +1037,11 @@ CExprCompileImpl::
 stackCToken(const CExprTokenBaseP &base)
 {
   tokenStack_.addToken(base);
+}
+
+bool
+CExprCompileImpl::
+hasFunction(const std::string &name) const
+{
+  return tokenStack_.hasFunction(name);
 }

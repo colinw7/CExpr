@@ -12,6 +12,8 @@ class CExprCompile {
 
   CExprTokenStack compileIToken(CExprITokenPtr itoken);
 
+  bool hasFunction(const std::string &name) const;
+
  private:
   friend class CExpr;
 
