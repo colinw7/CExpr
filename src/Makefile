@@ -25,6 +25,7 @@ CExprRValue.cpp \
 CExprStrgen.cpp \
 CExprSValue.cpp \
 CExprToken.cpp \
+CExprTokenStack.cpp \
 CExprValue.cpp \
 CExprVariable.cpp \
 
