@@ -38,6 +38,7 @@ CPPFLAGS = \
 -I../../CMath/include \
 -I../../CStrUtil/include \
 -I../../CUtil/include \
+-I../../COS/include \
 -I.
 
 clean:
