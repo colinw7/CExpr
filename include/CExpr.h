@@ -2,7 +2,6 @@
 #define CEXPR_H
 
 #include <CExprTypes.h>
-#include <CAutoPtr.h>
 #include <CStrUtil.h>
 
 class CExprValueBase {
@@ -68,7 +67,7 @@ class CExpr {
   static CExpr *instance();
 
   CExpr();
- ~CExpr() { }
+ ~CExpr();
 
   bool getQuiet() const { return quiet_; }
   void setQuiet(bool b) { quiet_ = b; }
@@ -99,6 +98,8 @@ class CExpr {
 
   void saveCompileState();
   void restoreCompileState();
+
+  bool isValidVariableName(const std::string &name) const;
 
   CExprVariablePtr getVariable     (const std::string &name) const;
   CExprVariablePtr createVariable  (const std::string &name, CExprValuePtr value);
@@ -135,22 +136,29 @@ class CExpr {
   void errorMsg(const std::string &msg) const;
 
  private:
-  typedef std::vector<CExprCompile *> Compiles;
-  typedef std::vector<CExprExecute *> Executes;
+  typedef std::vector<CExprCompile *>       Compiles;
+  typedef std::vector<CExprExecute *>       Executes;
+  typedef std::unique_ptr<CExprParse>       CExprParseP;
+  typedef std::unique_ptr<CExprInterp>      CExprInterpP;
+  typedef std::unique_ptr<CExprCompile>     CExprCompileP;
+  typedef std::unique_ptr<CExprExecute>     CExprExecuteP;
+  typedef std::unique_ptr<CExprOperatorMgr> CExprOperatorMgrP;
+  typedef std::unique_ptr<CExprVariableMgr> CExprVariableMgrP;
+  typedef std::unique_ptr<CExprFunctionMgr> CExprFunctionMgrP;
 
-  bool                       quiet_;
-  bool                       debug_;
-  bool                       trace_;
-  bool                       degrees_;
-  CAutoPtr<CExprParse>       parse_;
-  CAutoPtr<CExprInterp>      interp_;
-  CAutoPtr<CExprCompile>     compile_;
-  CAutoPtr<CExprExecute>     execute_;
-  Compiles                   compiles_;
-  Executes                   executes_;
-  CAutoPtr<CExprOperatorMgr> operatorMgr_;
-  CAutoPtr<CExprVariableMgr> variableMgr_;
-  CAutoPtr<CExprFunctionMgr> functionMgr_;
+  bool              quiet_ { false };
+  bool              debug_ { false };
+  bool              trace_ { false };
+  bool              degrees_ { false };
+  CExprParseP       parse_;
+  CExprInterpP      interp_;
+  CExprCompileP     compile_;
+  CExprExecuteP     execute_;
+  Compiles          compiles_;
+  Executes          executes_;
+  CExprOperatorMgrP operatorMgr_;
+  CExprVariableMgrP variableMgr_;
+  CExprFunctionMgrP functionMgr_;
 };
 
 //------

@@ -22,8 +22,10 @@ class CExprParse {
   CExprParse(CExpr *expr);
 
  private:
-  CExpr*                   expr_;
-  CAutoPtr<CExprParseImpl> impl_;
+  typedef std::unique_ptr<CExprParseImpl> CExprParseImplP;
+
+  CExpr*          expr_ { nullptr };
+  CExprParseImplP impl_;
 };
 
 #endif

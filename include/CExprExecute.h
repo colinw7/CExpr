@@ -17,8 +17,10 @@ class CExprExecute {
   CExprExecute(CExpr *expr);
 
  private:
-  CExpr*                     expr_;
-  CAutoPtr<CExprExecuteImpl> impl_;
+  typedef std::unique_ptr<CExprExecuteImpl> CExprExecuteImplP;
+
+  CExpr*            expr_ { nullptr };
+  CExprExecuteImplP impl_;
 };
 
 #endif

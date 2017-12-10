@@ -75,7 +75,8 @@ class CExprITokenStack {
   }
 
   CExprITokenPtr pop_back() {
-    if (stack_.empty()) return CExprITokenPtr();
+    if (stack_.empty())
+      return CExprITokenPtr();
 
     CExprITokenPtr token = stack_.back();
 
@@ -127,8 +128,10 @@ class CExprInterp {
   CExprInterp(CExpr *expr);
 
  private:
-  CExpr*                    expr_;
-  CAutoPtr<CExprInterpImpl> impl_;
+  typedef std::unique_ptr<CExprInterpImpl> CExprInterpImplP;
+
+  CExpr*           expr_ { nullptr };
+  CExprInterpImplP impl_;
 };
 
 #endif

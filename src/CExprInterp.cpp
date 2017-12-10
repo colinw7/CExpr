@@ -129,7 +129,7 @@ CExprInterp::
 CExprInterp(CExpr *expr) :
  expr_(expr)
 {
-  impl_ = new CExprInterpImpl(expr);
+  impl_ = CExprInterpImplP(new CExprInterpImpl(expr));
 }
 
 CExprInterp::

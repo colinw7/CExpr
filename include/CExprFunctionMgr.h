@@ -11,7 +11,7 @@ class CExprFunctionMgr {
   typedef std::vector<CExprFunctionArg> Args;
 
  public:
- ~CExprFunctionMgr() { }
+ ~CExprFunctionMgr();
 
   void addFunctions();
 

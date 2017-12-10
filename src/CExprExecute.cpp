@@ -52,7 +52,7 @@ CExprExecute::
 CExprExecute(CExpr *expr) :
  expr_(expr)
 {
-  impl_ = new CExprExecuteImpl(expr);
+  impl_ = CExprExecuteImplP(new CExprExecuteImpl(expr));
 }
 
 CExprExecute::
@@ -386,7 +386,21 @@ executeBinaryOperator(CExprOpType type)
   if (! value1.isValid() || ! value2.isValid())
     return false;
 
-  if (value1->isRealValue() || value2->isRealValue()) {
+  bool convReal = false;
+
+  if (value1->isRealValue() || value2->isRealValue())
+    convReal = true;
+
+  if (! convReal && type == CExprOpType::DIVIDE && value2->isIntegerValue()) {
+    long l = 0;
+
+    value2->getIntegerValue(l);
+
+    if (l == 0)
+      convReal = true;
+  }
+
+  if (convReal) {
     if (! value1->isRealValue()) value1 = value1->dup();
     if (! value2->isRealValue()) value2 = value2->dup();
 

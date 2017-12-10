@@ -2,7 +2,6 @@
 #define CExprCompile_H
 
 #include <CExprToken.h>
-#include <CAutoPtr.h>
 
 class CExprCompileImpl;
 
@@ -20,8 +19,10 @@ class CExprCompile {
   CExprCompile(CExpr *expr);
 
  private:
-  CExpr*                     expr_;
-  CAutoPtr<CExprCompileImpl> impl_;
+  typedef std::unique_ptr<CExprCompileImpl> CExprCompileImplP;
+
+  CExpr*            expr_ { nullptr };
+  CExprCompileImplP impl_;
 };
 
 #endif

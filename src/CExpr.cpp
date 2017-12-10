@@ -5,28 +5,35 @@ CExpr *
 CExpr::
 instance()
 {
-  static CAutoPtr<CExpr> instance;
+  typedef std::unique_ptr<CExpr> CExprP;
+
+  static CExprP instance;
 
   if (! instance)
-    instance = new CExpr;
+    instance = CExprP(new CExpr);
 
-  return instance;
+  return instance.get();
 }
 
 CExpr::
 CExpr() :
  quiet_(false), debug_(false), trace_(false), degrees_(false)
 {
-  parse_   = new CExprParse  (this);
-  interp_  = new CExprInterp (this);
-  compile_ = new CExprCompile(this);
-  execute_ = new CExprExecute(this);
+  parse_   = CExprParseP  (new CExprParse  (this));
+  interp_  = CExprInterpP (new CExprInterp (this));
+  compile_ = CExprCompileP(new CExprCompile(this));
+  execute_ = CExprExecuteP(new CExprExecute(this));
 
-  operatorMgr_ = new CExprOperatorMgr(this);
-  variableMgr_ = new CExprVariableMgr(this);
-  functionMgr_ = new CExprFunctionMgr(this);
+  operatorMgr_ = CExprOperatorMgrP(new CExprOperatorMgr(this));
+  variableMgr_ = CExprVariableMgrP(new CExprVariableMgr(this));
+  functionMgr_ = CExprFunctionMgrP(new CExprFunctionMgr(this));
 
   functionMgr_->addFunctions();
+}
+
+CExpr::
+~CExpr()
+{
 }
 
 bool
@@ -150,8 +157,8 @@ saveCompileState()
   compiles_.push_back(compile);
   executes_.push_back(execute);
 
-  compile_ = new CExprCompile(this);
-  execute_ = new CExprExecute(this);
+  compile_ = CExprCompileP(new CExprCompile(this));
+  execute_ = CExprExecuteP(new CExprExecute(this));
 }
 
 void
@@ -160,11 +167,30 @@ restoreCompileState()
 {
   assert(! compiles_.empty() && ! executes_.empty());
 
-  compile_ = compiles_.back();
-  execute_ = executes_.back();
+  compile_ = CExprCompileP(compiles_.back());
+  execute_ = CExprExecuteP(executes_.back());
 
   compiles_.pop_back();
   executes_.pop_back();
+}
+
+bool
+CExpr::
+isValidVariableName(const std::string &name) const
+{
+  int len = name.size();
+
+  if (len == 0)
+    return false;
+
+  if (name[0] != '_' && ! isalpha(name[0]))
+    return false;
+
+  for (int i = 1; i < len; ++i)
+    if (! isalnum(name[i]))
+      return false;
+
+  return true;
 }
 
 CExprVariablePtr

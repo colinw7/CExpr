@@ -55,7 +55,7 @@ CExprCompile::
 CExprCompile(CExpr *expr) :
  expr_(expr)
 {
-  impl_ = new CExprCompileImpl(expr);
+  impl_ = CExprCompileImplP(new CExprCompileImpl(expr));
 }
 
 CExprCompile::

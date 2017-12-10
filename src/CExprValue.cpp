@@ -2,7 +2,7 @@
 
 CExprValue::
 CExprValue() :
- type_(CExprValueType::NONE), base_(0)
+ type_(CExprValueType::NONE)
 {
 }
 
@@ -44,7 +44,7 @@ dup() const
   value1->type_ = type_;
 
   if (base_)
-    value1->base_ = base_->dup();
+    value1->base_ = CExprValueBaseP(base_->dup());
 
   return value1;
 }
@@ -174,7 +174,7 @@ convToBoolean()
     return false;
 
   type_ = CExprValueType::BOOLEAN;
-  base_ = new CExprBooleanValue(boolean);
+  base_ = CExprValueBaseP(new CExprBooleanValue(boolean));
 
   return true;
 }
@@ -191,7 +191,7 @@ convToInteger()
     return false;
 
   type_ = CExprValueType::INTEGER;
-  base_ = new CExprIntegerValue(integer);
+  base_ = CExprValueBaseP(new CExprIntegerValue(integer));
 
   return true;
 }
@@ -208,7 +208,7 @@ convToReal()
     return false;
 
   type_ = CExprValueType::REAL;
-  base_ = new CExprRealValue(real);
+  base_ = CExprValueBaseP(new CExprRealValue(real));
 
   return true;
 }
@@ -225,7 +225,7 @@ convToString()
     return false;
 
   type_ = CExprValueType::STRING;
-  base_ = new CExprStringValue(str);
+  base_ = CExprValueBaseP(new CExprStringValue(str));
 
   return true;
 }

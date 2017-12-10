@@ -62,7 +62,7 @@ CExprParse::
 CExprParse(CExpr *expr) :
  expr_(expr)
 {
-  impl_ = new CExprParseImpl(expr);
+  impl_ = CExprParseImplP(new CExprParseImpl(expr));
 }
 
 CExprParse::

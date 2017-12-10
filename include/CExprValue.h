@@ -1,6 +1,8 @@
 #ifndef CExprValue_H
 #define CExprValue_H
 
+#include <memory>
+
 class CExprValue {
  public:
   CExprValue();
@@ -55,8 +57,10 @@ class CExprValue {
   }
 
  private:
-  CExprValueType           type_;
-  CAutoPtr<CExprValueBase> base_;
+  typedef std::unique_ptr<CExprValueBase> CExprValueBaseP;
+
+  CExprValueType  type_;
+  CExprValueBaseP base_;
 };
 
 #endif

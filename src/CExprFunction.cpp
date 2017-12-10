@@ -60,6 +60,10 @@ CEXPR_ANGLE_1_FUNC(Sin, ::sin)
 CEXPR_ANGLE_1_FUNC(Cos, ::cos)
 CEXPR_ANGLE_1_FUNC(Tan, ::tan)
 
+CEXPR_ANGLE_1_FUNC(ASin, ::asin)
+CEXPR_ANGLE_1_FUNC(ACos, ::acos)
+CEXPR_ANGLE_1_FUNC(ATan, ::atan)
+
 CEXPR_REAL_INTEGER_1_FUNC(Abs, ::fabs, ::abs)
 
 static CExprBuiltinFunction
@@ -72,6 +76,9 @@ builtinFns[] = {
   { "cos"  , "r" , CExprFunctionCos   },
   { "tan"  , "r" , CExprFunctionTan   },
   { "abs"  , "ri", CExprFunctionAbs   },
+  { "asin" , "r" , CExprFunctionASin  },
+  { "acos" , "r" , CExprFunctionACos  },
+  { "atan" , "r" , CExprFunctionATan  },
   { ""     , ""  , 0                  }
 };
 
@@ -80,6 +87,11 @@ builtinFns[] = {
 CExprFunctionMgr::
 CExprFunctionMgr(CExpr *expr) :
  expr_(expr)
+{
+}
+
+CExprFunctionMgr::
+~CExprFunctionMgr()
 {
 }
 
@@ -224,7 +236,7 @@ parseArgs(const std::string &argsStr, Args &args, bool &variableArgs)
   for (uint i = 0; i < num_args; ++i) {
     const std::string &arg = args1[i];
 
-    if (arg == "..." && i == num_args -1) {
+    if (arg == "..." && i == num_args - 1) {
       variableArgs = true;
       break;
     }
