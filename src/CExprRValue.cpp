@@ -1,5 +1,6 @@
 #include <CExprI.h>
 #include <CMathGen.h>
+#include <NaN.h>
 #include <cerrno>
 
 bool
