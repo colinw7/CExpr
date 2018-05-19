@@ -13,9 +13,7 @@ enum class CExprErrorType {
 
 class CExprErrorData {
  public:
-  CExprErrorData() :
-   hasError_(false) {
-  }
+  CExprErrorData() { }
 
   void setLastError(const std::string &message) {
     if (message == "") {
@@ -43,7 +41,7 @@ class CExprErrorData {
   }
 
  private:
-  bool        hasError_;
+  bool        hasError_ { false };
   std::string lastError_;
 };
 

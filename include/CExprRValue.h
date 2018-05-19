@@ -30,7 +30,7 @@ class CExprRealValue : public CExprValueBase {
   double realModulus(double real1, double real2, int *error_code) const;
 
  private:
-  double real_;
+  double real_ { 0.0 };
 };
 
 #endif

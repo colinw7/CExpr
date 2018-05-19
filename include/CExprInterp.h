@@ -59,7 +59,7 @@ class CExprIToken {
  private:
   typedef std::vector<CExprITokenPtr> ITokenList;
 
-  CExprITokenType itype_;
+  CExprITokenType itype_ { CExprITokenType::NONE };
   CExprTokenBaseP base_;
   ITokenList      children_;
 };

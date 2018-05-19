@@ -19,11 +19,13 @@ class CExprFunctionObj {
 //------
 
 struct CExprFunctionArg {
-  CExprFunctionArg(CExprValueType type1=CExprValueType::NONE) :
-   type(type1) {
+  CExprFunctionArg() = default;
+
+  CExprFunctionArg(CExprValueType type) :
+   type(type) {
   }
 
-  CExprValueType type;
+  CExprValueType type { CExprValueType::NONE };
 };
 
 //------
@@ -31,7 +33,7 @@ struct CExprFunctionArg {
 class CExprFunction {
  public:
   CExprFunction(const std::string &name) :
-   name_(name), builtin_(false), variableArgs_(false) {
+   name_(name) {
   }
 
   virtual ~CExprFunction() { }
@@ -73,8 +75,8 @@ class CExprFunction {
 
  protected:
   std::string name_;
-  bool        builtin_;
-  bool        variableArgs_;
+  bool        builtin_      { false };
+  bool        variableArgs_ { false };
 };
 
 //------
@@ -124,7 +126,7 @@ class CExprObjFunction : public CExprFunction {
 
  private:
   Args              args_;
-  CExprFunctionObj *proc_;
+  CExprFunctionObj *proc_ { nullptr };
 };
 
 //------

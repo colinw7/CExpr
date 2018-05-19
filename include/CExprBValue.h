@@ -26,7 +26,7 @@ class CExprBooleanValue : public CExprValueBase {
   }
 
  private:
-  bool boolean_;
+  bool boolean_ { false };
 };
 
 #endif

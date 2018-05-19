@@ -17,7 +17,7 @@ class CExprOperatorMgr {
  private:
   typedef std::map<CExprOpType,CExprOperatorPtr> OperatorMap;
 
-  CExpr*      expr_;
+  CExpr*      expr_ { nullptr };
   OperatorMap operator_map_;
 };
 

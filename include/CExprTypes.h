@@ -79,6 +79,7 @@ enum class CExprTokenType {
 };
 
 enum class CExprITokenType {
+  NONE                      = 0,
   TOKEN_TYPE                = 100,
   EXPRESSION                = 101,
   ASSIGNMENT_EXPRESSION     = 102,

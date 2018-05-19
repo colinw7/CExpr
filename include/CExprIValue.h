@@ -30,7 +30,7 @@ class CExprIntegerValue : public CExprValueBase {
   long realToInteger(double real, int *error_code) const;
 
  private:
-  long integer_;
+  long integer_ { 0 };
 };
 
 #endif

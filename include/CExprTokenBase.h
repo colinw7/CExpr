@@ -34,7 +34,7 @@ class CExprTokenBase {
   virtual void print(std::ostream &os) const = 0;
 
  protected:
-  CExprTokenType type_;
+  CExprTokenType type_ { CExprTokenType::UNKNOWN };
 };
 
 typedef CRefPtr<CExprTokenBase> CExprTokenBaseP;

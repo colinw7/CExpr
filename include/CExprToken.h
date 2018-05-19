@@ -46,7 +46,7 @@ class CExprTokenOperator : public CExprTokenBase {
   void print(std::ostream &os) const;
 
  private:
-  CExprOpType type_;
+  CExprOpType type_ { CExprOpType::UNKNOWN };
 };
 
 //---
@@ -64,7 +64,7 @@ class CExprTokenInteger : public CExprTokenBase {
   void print(std::ostream &os) const { os << integer_; }
 
  private:
-  long integer_;
+  long integer_ { 0 };
 };
 
 //---
@@ -82,7 +82,7 @@ class CExprTokenReal : public CExprTokenBase {
   void print(std::ostream &os) const { os << real_; }
 
  private:
-  double real_;
+  double real_ { 0.0 };
 };
 
 //---

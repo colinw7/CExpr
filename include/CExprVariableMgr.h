@@ -26,7 +26,7 @@ class CExprVariableMgr {
  private:
   typedef std::list<CExprVariablePtr> VariableList;
 
-  CExpr*       expr_;
+  CExpr*       expr_ { nullptr };
   VariableList variables_;
 };
 
