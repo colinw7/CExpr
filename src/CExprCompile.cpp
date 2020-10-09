@@ -817,9 +817,9 @@ compilePostfixExpression(CExprITokenPtr itoken)
       compileArgumentExpressionList(itoken->getChild(2));
     }
 
-    CExprITokenPtr itoken0 = itoken->getChild(0);
+    CExprITokenPtr itoken00 = itoken->getChild(0);
 
-    const std::string &identifier = itoken0->getIdentifier();
+    const std::string &identifier = itoken00->getIdentifier();
 
     CExprFunctionMgr::Functions functions;
 
