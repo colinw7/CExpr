@@ -26,16 +26,17 @@ CExprInsertEscapeCodes(const std::string &str)
     str1 += '\\';
 
     switch (c) {
-      case '\a': str1 += 'a'; break;
-      case '\b': str1 += 'b'; break;
-      case '\f': str1 += 'f'; break;
-      case '\n': str1 += 'n'; break;
-      case '\r': str1 += 'r'; break;
-      case '\t': str1 += 't'; break;
-      case '\v': str1 += 'v'; break;
-      case '\"': str1 += '\"'; break;
-      case '\'': str1 += '\''; break;
-      case '\033': str1 += 'e'; break;
+      case '\a'  : str1 += 'a' ; break;
+      case '\b'  : str1 += 'b' ; break;
+      case '\f'  : str1 += 'f' ; break;
+      case '\n'  : str1 += 'n' ; break;
+      case '\r'  : str1 += 'r' ; break;
+      case '\t'  : str1 += 't' ; break;
+      case '\v'  : str1 += 'v' ; break;
+      case '\"'  : str1 += '\"'; break;
+      case '\''  : str1 += '\''; break;
+      case '\033': str1 += 'e' ; break;
+
       default: {
         int digit1 = c/64;
         int digit2 = (c - digit1*64)/8;

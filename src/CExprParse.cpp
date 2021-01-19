@@ -602,31 +602,16 @@ replaceEscapeCodes(const std::string &str)
     ++i;
 
     switch (str[i]) {
-      case 'a':
-        str1 += '\a';
-        break;
-      case 'b':
-        str1 += '\b';
-        break;
-      case 'e':
-        str1 += '\033';
-        break;
-      case 'f':
-        str1 += '\f';
-        break;
-      case 'n':
-        str1 += '\n';
-        break;
-      case 'r':
-        str1 += '\r';
-        break;
-      case 't':
-        str1 += '\t';
-        break;
-      case 'v':
-        str1 += '\v';
-        break;
-      case 'x':
+      case 'a': str1 += '\a'  ; break;
+      case 'b': str1 += '\b'  ; break;
+      case 'e': str1 += '\033'; break;
+      case 'f': str1 += '\f'  ; break;
+      case 'n': str1 += '\n'  ; break;
+      case 'r': str1 += '\r'  ; break;
+      case 't': str1 += '\t'  ; break;
+      case 'v': str1 += '\v'  ; break;
+
+      case 'x': {
         if (i < len - 1 && ::isxdigit(str[i + 1])) {
           int hex_value = 0;
 
@@ -660,10 +645,11 @@ replaceEscapeCodes(const std::string &str)
         }
 
         break;
-      case '\\':
-        str1 += '\\';
-        break;
-      case '0':
+      }
+
+      case '\\': str1 += '\\'; break;
+
+      case '0': {
         if (i < len - 1 && CStrUtil::isodigit(str[i + 1])) {
           int oct_value = 0;
 
@@ -695,14 +681,12 @@ replaceEscapeCodes(const std::string &str)
         }
 
         break;
-      case '\'':
-      case '\"':
-        str1 += str[i];
-        break;
-      default:
-        str1 += '\\';
-        str1 += str[i];
-        break;
+      }
+
+      case '\'': str1 += str[i]; break;
+      case '\"': str1 += str[i]; break;
+
+      default: str1 += '\\'; str1 += str[i]; break;
     }
 
     ++i;
