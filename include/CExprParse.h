@@ -8,18 +8,16 @@ class CExprParseImpl;
 
 class CExprParse {
  public:
+  CExprParse(CExpr *expr);
  ~CExprParse();
+
+  CExpr *expr() const { return expr_; }
 
   CExprTokenStack parseFile(const std::string &filename);
   CExprTokenStack parseFile(FILE *fp);
   CExprTokenStack parseLine(const std::string &str);
 
   bool skipExpression(const std::string &str, uint &i);
-
- private:
-  friend class CExpr;
-
-  CExprParse(CExpr *expr);
 
  private:
   typedef std::unique_ptr<CExprParseImpl> CExprParseImplP;

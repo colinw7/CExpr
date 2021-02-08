@@ -10,7 +10,7 @@ CExprVariablePtr
 CExprVariableMgr::
 createVariable(const std::string &name, CExprValuePtr value)
 {
-  CExprVariablePtr variable = getVariable(name);
+  auto variable = getVariable(name);
 
   if (! variable.isValid()) {
     variable = CExprVariablePtr(new CExprVariable(name, value));

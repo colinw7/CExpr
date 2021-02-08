@@ -39,7 +39,7 @@ CExprValue *
 CExprValue::
 dup() const
 {
-  CExprValue *value1 = new CExprValue;
+  auto *value1 = new CExprValue;
 
   value1->type_ = type_;
 

@@ -374,9 +374,9 @@ exec(CExpr *expr, const CExprValueArray &values)
 
   // set arg values (save previous values)
   for (uint i = 0; i < numArgs(); ++i) {
-    const std::string &arg = args_[i];
+    const auto &arg = args_[i];
 
-    CExprVariablePtr var = expr->getVariable(arg);
+    auto var = expr->getVariable(arg);
 
     if (var.isValid()) {
       varValues[arg] = var->getValue();
@@ -406,11 +406,11 @@ exec(CExpr *expr, const CExprValueArray &values)
 
   // restore variables
   for (const auto &v : varValues) {
-    const std::string varName = v.first;
-    CExprValuePtr     value1  = v.second;
+    const auto &varName = v.first;
+    auto        value1  = v.second;
 
     if (value1.isValid()) {
-      CExprVariablePtr var = expr->getVariable(varName);
+      auto var = expr->getVariable(varName);
 
       var->setValue(value1);
     }

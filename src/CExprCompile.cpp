@@ -257,9 +257,9 @@ compileAssignmentExpression(CExprITokenPtr itoken)
   if (num_children == 3) {
     compileUnaryExpression(itoken->getChild(0));
 
-    CExprITokenPtr itoken1 = itoken->getChild(1);
+    auto itoken1 = itoken->getChild(1);
 
-    CExprOpType op = itoken1->getOperator();
+    auto op = itoken1->getOperator();
 
     switch (op) {
       case CExprOpType::EQUALS:
@@ -523,9 +523,9 @@ compileEqualityExpression(CExprITokenPtr itoken)
   uint num_children = itoken->getNumChildren();
 
   if (num_children == 3) {
-    CExprITokenPtr itoken1 = itoken->getChild(1);
+    auto itoken1 = itoken->getChild(1);
 
-    CExprOpType op = itoken1->getOperator();
+    auto op = itoken1->getOperator();
 
     if      (op == CExprOpType::EQUAL) {
       compileEqualityExpression(itoken->getChild(0));
@@ -574,7 +574,7 @@ compileRelationalExpression(CExprITokenPtr itoken)
 
     compileShiftExpression(itoken->getChild(2));
 
-    CExprITokenPtr itoken1 = itoken->getChild(1);
+    auto itoken1 = itoken->getChild(1);
 
     stackCToken(itoken1->base());
   }
@@ -599,9 +599,9 @@ compileShiftExpression(CExprITokenPtr itoken)
 
     compileAdditiveExpression(itoken->getChild(2));
 
-    CExprITokenPtr itoken1 = itoken->getChild(1);
+    auto itoken1 = itoken->getChild(1);
 
-    CExprOpType op = itoken1->getOperator();
+    auto op = itoken1->getOperator();
 
     if      (op == CExprOpType::BIT_LSHIFT)
       stackCToken(itoken1->base());
@@ -631,9 +631,9 @@ compileAdditiveExpression(CExprITokenPtr itoken)
 
     compileMultiplicativeExpression(itoken->getChild(2));
 
-    CExprITokenPtr itoken1 = itoken->getChild(1);
+    auto itoken1 = itoken->getChild(1);
 
-    CExprOpType op = itoken1->getOperator();
+    auto op = itoken1->getOperator();
 
     if      (op == CExprOpType::PLUS)
       stackCToken(itoken1->base());
@@ -664,9 +664,9 @@ compileMultiplicativeExpression(CExprITokenPtr itoken)
 
     compileUnaryExpression(itoken->getChild(2));
 
-    CExprITokenPtr itoken1 = itoken->getChild(1);
+    auto itoken1 = itoken->getChild(1);
 
-    CExprOpType op = itoken1->getOperator();
+    auto op = itoken1->getOperator();
 
     if      (op == CExprOpType::TIMES)
       stackCToken(itoken1->base());
@@ -698,10 +698,10 @@ compileUnaryExpression(CExprITokenPtr itoken)
   uint num_children = itoken->getNumChildren();
 
   if (num_children == 2) {
-    CExprITokenPtr itoken0 = itoken->getChild(0);
+    auto itoken0 = itoken->getChild(0);
 
     if (itoken0->base().isValid()) {
-      CExprOpType op = itoken0->getOperator();
+      auto op = itoken0->getOperator();
 
       switch (op) {
         case CExprOpType::INCREMENT:
@@ -792,7 +792,7 @@ void
 CExprCompileImpl::
 compilePostfixExpression(CExprITokenPtr itoken)
 {
-  CExprITokenPtr itoken0 = itoken->getChild(0);
+  auto itoken0 = itoken->getChild(0);
 
   uint num_children = itoken->getNumChildren();
 
@@ -801,9 +801,9 @@ compilePostfixExpression(CExprITokenPtr itoken)
     return;
   }
 
-  CExprITokenPtr itoken1 = itoken->getChild(1);
+  auto itoken1 = itoken->getChild(1);
 
-  CExprOpType op = itoken1->getOperator();
+  auto op = itoken1->getOperator();
 
   if      (op == CExprOpType::OPEN_RBRACKET) {
     stackCToken(itoken1->base());
@@ -817,7 +817,7 @@ compilePostfixExpression(CExprITokenPtr itoken)
       compileArgumentExpressionList(itoken->getChild(2));
     }
 
-    CExprITokenPtr itoken00 = itoken->getChild(0);
+    auto itoken00 = itoken->getChild(0);
 
     const std::string &identifier = itoken00->getIdentifier();
 
@@ -966,7 +966,7 @@ void
 CExprCompileImpl::
 compileInteger(CExprITokenPtr itoken)
 {
-  CExprValuePtr value = expr_->createIntegerValue(itoken->getInteger());
+  auto value = expr_->createIntegerValue(itoken->getInteger());
 
   CExprTokenBaseP base(CExprTokenMgrInst->createValueToken(value));
 
@@ -977,7 +977,7 @@ void
 CExprCompileImpl::
 compileReal(CExprITokenPtr itoken)
 {
-  CExprValuePtr value = expr_->createRealValue(itoken->getReal());
+  auto value = expr_->createRealValue(itoken->getReal());
 
   CExprTokenBaseP base(CExprTokenMgrInst->createValueToken(value));
 
@@ -988,7 +988,7 @@ void
 CExprCompileImpl::
 compileString(CExprITokenPtr itoken)
 {
-  CExprValuePtr value = expr_->createStringValue(itoken->getString());
+  auto value = expr_->createStringValue(itoken->getString());
 
   CExprTokenBaseP base(CExprTokenMgrInst->createValueToken(value));
 

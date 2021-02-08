@@ -6,15 +6,13 @@ class CExprExecuteImpl;
 
 class CExprExecute {
  public:
+  CExprExecute(CExpr *expr);
  ~CExprExecute();
+
+  CExpr *expr() const { return expr_; }
 
   bool executeCTokenStack(const CExprTokenStack &stack, CExprValueArray &values);
   bool executeCTokenStack(const CExprTokenStack &stack, CExprValuePtr &value);
-
- private:
-  friend class CExpr;
-
-  CExprExecute(CExpr *expr);
 
  private:
   typedef std::unique_ptr<CExprExecuteImpl> CExprExecuteImplP;

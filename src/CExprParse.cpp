@@ -166,7 +166,8 @@ parseLine(CExprTokenStack &stack, const std::string &line, uint &i)
 {
   CExprTokenBaseP ptoken;
   CExprTokenBaseP lastPToken;
-  CExprTokenType  lastPTokenType = CExprTokenType::UNKNOWN;
+
+  auto lastPTokenType = CExprTokenType::UNKNOWN;
 
   while (true) {
     CStrUtil::skipSpace(line, &i);
@@ -234,8 +235,8 @@ bool
 CExprParseImpl::
 skipExpression(const std::string &line, uint &i, const std::string &echars)
 {
-  CExprTokenType lastTokenType = CExprTokenType::UNKNOWN;
-  CExprOpType    lastOpType    = CExprOpType::UNKNOWN;
+  auto lastTokenType = CExprTokenType::UNKNOWN;
+  auto lastOpType    = CExprOpType::UNKNOWN;
 
   uint i1   = i;
   uint len1 = line.size();
@@ -244,8 +245,8 @@ skipExpression(const std::string &line, uint &i, const std::string &echars)
     CStrUtil::skipSpace(line, &i);
     if (i >= len1) break;
 
-    CExprTokenType lastTokenType1 = lastTokenType;
-    CExprOpType    lastOpType1    = lastOpType;
+    auto lastTokenType1 = lastTokenType;
+    auto lastOpType1    = lastOpType;
 
     lastTokenType = CExprTokenType::UNKNOWN;
     lastOpType    = CExprOpType::UNKNOWN;
@@ -702,7 +703,7 @@ CExprTokenBaseP
 CExprParseImpl::
 readOperator(const std::string &str, uint *i)
 {
-  CExprOpType id = skipOperator(str, i);
+  auto id = skipOperator(str, i);
 
   if (id == CExprOpType::UNKNOWN)
     return CExprTokenBaseP();
@@ -714,7 +715,7 @@ CExprOpType
 CExprParseImpl::
 skipOperator(const std::string &str, uint *i)
 {
-  CExprOpType id = CExprOpType::UNKNOWN;
+  auto id = CExprOpType::UNKNOWN;
 
   switch (str[*i]) {
     case '(':

@@ -5,28 +5,27 @@ CExpr *
 CExpr::
 instance()
 {
-  typedef std::unique_ptr<CExpr> CExprP;
+  using CExprP = std::unique_ptr<CExpr>;
 
   static CExprP instance;
 
   if (! instance)
-    instance = CExprP(new CExpr);
+    instance = std::make_unique<CExpr>();
 
   return instance.get();
 }
 
 CExpr::
-CExpr() :
- quiet_(false), debug_(false), trace_(false), degrees_(false)
+CExpr()
 {
-  parse_   = CExprParseP  (new CExprParse  (this));
-  interp_  = CExprInterpP (new CExprInterp (this));
-  compile_ = CExprCompileP(new CExprCompile(this));
-  execute_ = CExprExecuteP(new CExprExecute(this));
+  parse_   = std::make_unique<CExprParse  >(this);
+  interp_  = std::make_unique<CExprInterp >(this);
+  compile_ = std::make_unique<CExprCompile>(this);
+  execute_ = std::make_unique<CExprExecute>(this);
 
-  operatorMgr_ = CExprOperatorMgrP(new CExprOperatorMgr(this));
-  variableMgr_ = CExprVariableMgrP(new CExprVariableMgr(this));
-  functionMgr_ = CExprFunctionMgrP(new CExprFunctionMgr(this));
+  operatorMgr_ = std::make_unique<CExprOperatorMgr>(this);
+  variableMgr_ = std::make_unique<CExprVariableMgr>(this);
+  functionMgr_ = std::make_unique<CExprFunctionMgr>(this);
 
   functionMgr_->addFunctions();
 }
@@ -40,7 +39,7 @@ bool
 CExpr::
 evaluateExpression(const std::string &str, CExprValueArray &values)
 {
-  CExprTokenStack pstack = parseLine(str);
+  auto pstack = parseLine(str);
 
   return executePTokenStack(pstack, values);
 }
@@ -49,7 +48,7 @@ bool
 CExpr::
 evaluateExpression(const std::string &str, CExprValuePtr &value)
 {
-  CExprTokenStack pstack = parseLine(str);
+  auto pstack = parseLine(str);
 
   return executePTokenStack(pstack, value);
 }
@@ -58,8 +57,8 @@ bool
 CExpr::
 executePTokenStack(const CExprTokenStack &pstack, CExprValueArray &values)
 {
-  CExprITokenPtr  itoken = interpPTokenStack(pstack);
-  CExprTokenStack cstack = compileIToken(itoken);
+  auto itoken = interpPTokenStack(pstack);
+  auto cstack = compileIToken(itoken);
 
   return executeCTokenStack(cstack, values);
 }
@@ -68,8 +67,8 @@ bool
 CExpr::
 executePTokenStack(const CExprTokenStack &pstack, CExprValuePtr &value)
 {
-  CExprITokenPtr  itoken = interpPTokenStack(pstack);
-  CExprTokenStack cstack = compileIToken(itoken);
+  auto itoken = interpPTokenStack(pstack);
+  auto cstack = compileIToken(itoken);
 
   return executeCTokenStack(cstack, value);
 }
@@ -78,7 +77,7 @@ CExprTokenStack
 CExpr::
 parseLine(const std::string &line)
 {
-  CExprTokenStack pstack = parse_->parseLine(line);
+  auto pstack = parse_->parseLine(line);
 
   if (getDebug())
     std::cerr << "PTokenStack:" << pstack << std::endl;
@@ -90,7 +89,7 @@ CExprITokenPtr
 CExpr::
 interpPTokenStack(const CExprTokenStack &stack)
 {
-  CExprITokenPtr itoken = interp_->interpPTokenStack(stack);
+  auto itoken = interp_->interpPTokenStack(stack);
 
   if (getDebug())
     std::cerr << "IToken:" << itoken << std::endl;
@@ -102,7 +101,7 @@ CExprTokenStack
 CExpr::
 compileIToken(CExprITokenPtr itoken)
 {
-  CExprTokenStack cstack = compile_->compileIToken(itoken);
+  auto cstack = compile_->compileIToken(itoken);
 
   if (getDebug())
     std::cerr << "CTokenStack:" << cstack << std::endl;
@@ -151,8 +150,8 @@ void
 CExpr::
 saveCompileState()
 {
-  CExprCompile *compile = compile_.release();
-  CExprExecute *execute = execute_.release();
+  auto *compile = compile_.release();
+  auto *execute = execute_.release();
 
   compiles_.push_back(compile);
   executes_.push_back(execute);
@@ -258,8 +257,7 @@ getFunctions(const std::string &name, Functions &functions)
 
 CExprFunctionPtr
 CExpr::
-addFunction(const std::string &name, const std::vector<std::string> &args,
-            const std::string &proc)
+addFunction(const std::string &name, const std::vector<std::string> &args, const std::string &proc)
 {
   return functionMgr_->addUserFunction(name, args, proc);
 }
@@ -296,7 +294,7 @@ std::string
 CExpr::
 getOperatorName(CExprOpType type) const
 {
-  CExprOperatorPtr op = operatorMgr_->getOperator(type);
+  auto op = operatorMgr_->getOperator(type);
 
   if (op.isValid())
     return op->getName();
@@ -353,26 +351,35 @@ class CExprPrintF : public CPrintF {
   long getLongLong() const { return getLong(); }
 
   long getLong() const {
-    CExprValuePtr value = nextValue();
+    auto value = nextValue();
+
     long l = 0;
+
     if (value.isValid())
       value->getIntegerValue(l);
+
     return l;
   }
 
   double getDouble() const {
-    CExprValuePtr value = nextValue();
+    auto value = nextValue();
+
     double r = 0.0;
+
     if (value.isValid())
       value->getRealValue(r);
+
     return r;
   }
 
   std::string getString() const {
-    CExprValuePtr value = nextValue();
+    auto value = nextValue();
+
     std::string s;
+
     if (value.isValid())
       value->getStringValue(s);
+
     return s;
   }
 
@@ -385,7 +392,7 @@ class CExprPrintF : public CPrintF {
  private:
   std::string     fmt_;
   CExprValueArray values_;
-  mutable uint    iv_;
+  mutable uint    iv_ { 0 };
 };
 
 std::string

@@ -118,14 +118,12 @@ class CExprInterpImpl;
 
 class CExprInterp {
  public:
+  CExprInterp(CExpr *expr);
  ~CExprInterp();
 
+  CExpr *expr() const { return expr_; }
+
   CExprITokenPtr interpPTokenStack(const CExprTokenStack &stack);
-
- private:
-  friend class CExpr;
-
-  CExprInterp(CExpr *expr);
 
  private:
   typedef std::unique_ptr<CExprInterpImpl> CExprInterpImplP;

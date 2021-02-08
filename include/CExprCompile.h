@@ -7,16 +7,14 @@ class CExprCompileImpl;
 
 class CExprCompile {
  public:
+  CExprCompile(CExpr *expr);
  ~CExprCompile();
+
+  CExpr *expr() const { return expr_; }
 
   CExprTokenStack compileIToken(CExprITokenPtr itoken);
 
   bool hasFunction(const std::string &name) const;
-
- private:
-  friend class CExpr;
-
-  CExprCompile(CExpr *expr);
 
  private:
   typedef std::unique_ptr<CExprCompileImpl> CExprCompileImplP;

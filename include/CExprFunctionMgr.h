@@ -11,7 +11,10 @@ class CExprFunctionMgr {
   typedef std::vector<CExprFunctionArg> Args;
 
  public:
+  CExprFunctionMgr(CExpr *expr);
  ~CExprFunctionMgr();
+
+  CExpr *expr() const { return expr_; }
 
   void addFunctions();
 
@@ -21,8 +24,8 @@ class CExprFunctionMgr {
 
   CExprFunctionPtr addProcFunction(const std::string &name, const std::string &args,
                                    CExprFunctionProc proc);
-  CExprFunctionPtr addObjFunction(const std::string &name, const std::string &args,
-                                  CExprFunctionObj *proc);
+  CExprFunctionPtr addObjFunction (const std::string &name, const std::string &args,
+                                   CExprFunctionObj *proc);
   CExprFunctionPtr addUserFunction(const std::string &name, const std::vector<std::string> &args,
                                    const std::string &proc);
 
@@ -37,10 +40,7 @@ class CExprFunctionMgr {
   void resetCompiled();
 
  private:
-  CExprFunctionMgr(CExpr *expr);
-
- private:
-  typedef std::list<CExprFunctionPtr> FunctionList;
+  using FunctionList = std::list<CExprFunctionPtr>;
 
   CExpr*       expr_ { nullptr };
   FunctionList functions_;

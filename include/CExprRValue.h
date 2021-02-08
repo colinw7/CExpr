@@ -18,7 +18,7 @@ class CExprRealValue : public CExprValueBase {
 
   void setRealValue(double r) { real_ = r; }
 
-  CExprValuePtr execUnaryOp(CExpr *expr, CExprOpType op) const;
+  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const;
   CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const;
 
   void print(std::ostream &os) const {
@@ -26,7 +26,7 @@ class CExprRealValue : public CExprValueBase {
   }
 
  private:
-  double realPower(double real1, double real2, int *error_code) const;
+  double realPower  (double real1, double real2, int *error_code) const;
   double realModulus(double real1, double real2, int *error_code) const;
 
  private:

@@ -18,7 +18,7 @@ class CExprStringValue : public CExprValueBase {
 
   void setStringValue(const std::string &s) { str_ = s; }
 
-  CExprValuePtr execUnaryOp(CExpr *expr, CExprOpType op) const;
+  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const;
   CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const;
 
   void print(std::ostream &os) const {

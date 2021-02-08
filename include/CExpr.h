@@ -110,7 +110,7 @@ class CExpr {
   CExprVariablePtr createIntegerVariable(const std::string &name, long l);
   CExprVariablePtr createStringVariable (const std::string &name, const std::string &str);
 
-  CExprFunctionPtr getFunction(const std::string &name);
+  CExprFunctionPtr getFunction (const std::string &name);
   void             getFunctions(const std::string &name, Functions &functions);
 
   CExprFunctionPtr addFunction(const std::string &name, const StringArray &args,
@@ -136,19 +136,19 @@ class CExpr {
   void errorMsg(const std::string &msg) const;
 
  private:
-  typedef std::vector<CExprCompile *>       Compiles;
-  typedef std::vector<CExprExecute *>       Executes;
-  typedef std::unique_ptr<CExprParse>       CExprParseP;
-  typedef std::unique_ptr<CExprInterp>      CExprInterpP;
-  typedef std::unique_ptr<CExprCompile>     CExprCompileP;
-  typedef std::unique_ptr<CExprExecute>     CExprExecuteP;
-  typedef std::unique_ptr<CExprOperatorMgr> CExprOperatorMgrP;
-  typedef std::unique_ptr<CExprVariableMgr> CExprVariableMgrP;
-  typedef std::unique_ptr<CExprFunctionMgr> CExprFunctionMgrP;
+  using Compiles          = std::vector<CExprCompile *>;
+  using Executes          = std::vector<CExprExecute *>;
+  using CExprParseP       = std::unique_ptr<CExprParse>;
+  using CExprInterpP      = std::unique_ptr<CExprInterp>;
+  using CExprCompileP     = std::unique_ptr<CExprCompile>;
+  using CExprExecuteP     = std::unique_ptr<CExprExecute>;
+  using CExprOperatorMgrP = std::unique_ptr<CExprOperatorMgr>;
+  using CExprVariableMgrP = std::unique_ptr<CExprVariableMgr>;
+  using CExprFunctionMgrP = std::unique_ptr<CExprFunctionMgr>;
 
-  bool              quiet_ { false };
-  bool              debug_ { false };
-  bool              trace_ { false };
+  bool              quiet_   { false };
+  bool              debug_   { false };
+  bool              trace_   { false };
   bool              degrees_ { false };
   CExprParseP       parse_;
   CExprInterpP      interp_;
