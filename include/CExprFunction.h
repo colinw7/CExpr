@@ -89,7 +89,7 @@ class CExprProcFunction : public CExprFunction {
   CExprProcFunction(const std::string &name, const Args &args, CExprFunctionProc proc);
   CExprProcFunction(const std::string &name, const std::string &argsStr, CExprFunctionProc proc);
 
-  uint numArgs() const override { return args_.size(); }
+  uint numArgs() const override { return uint(args_.size()); }
 
   CExprValueType argType(uint i) const override {
     return (i < args_.size() ? args_[i].type : CExprValueType::NUL);
@@ -114,7 +114,7 @@ class CExprObjFunction : public CExprFunction {
   CExprObjFunction(const std::string &name, const Args &args, CExprFunctionObj *proc);
  ~CExprObjFunction();
 
-  uint numArgs() const override { return args_.size(); }
+  uint numArgs() const override { return uint(args_.size()); }
 
   CExprValueType argType(uint i) const override {
     return (i < args_.size() ? args_[i].type : CExprValueType::NUL);
@@ -138,7 +138,7 @@ class CExprUserFunction : public CExprFunction {
  public:
   CExprUserFunction(const std::string &name, const Args &args, const std::string &proc);
 
-  uint numArgs() const override { return args_.size(); }
+  uint numArgs() const override { return uint(args_.size()); }
 
   const std::string &proc() const { return proc_; }
 

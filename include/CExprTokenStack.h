@@ -16,7 +16,7 @@ class CExprTokenStack {
   }
 
   uint getNumTokens() const {
-    return stack_.size();
+    return uint(stack_.size());
   }
 
   void addToken(const CExprTokenBaseP &token) {
