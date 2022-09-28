@@ -231,7 +231,7 @@ parseArgs(const std::string &argsStr, Args &args, bool &variableArgs)
 
   CStrUtil::addTokens(argsStr, args1, ", ");
 
-  uint num_args = args1.size();
+  auto num_args = args1.size();
 
   for (uint i = 0; i < num_args; ++i) {
     const std::string &arg = args1[i];
@@ -243,7 +243,7 @@ parseArgs(const std::string &argsStr, Args &args, bool &variableArgs)
 
     uint types = uint(CExprValueType::NONE);
 
-    uint len = arg.size();
+    auto len = arg.size();
 
     for (uint j = 0; j < len; j++) {
       char c = arg[j];
@@ -260,7 +260,7 @@ parseArgs(const std::string &argsStr, Args &args, bool &variableArgs)
       }
     }
 
-    args.push_back(CExprFunctionArg((CExprValueType) types));
+    args.push_back(CExprFunctionArg(CExprValueType(types)));
   }
 
   return rc;

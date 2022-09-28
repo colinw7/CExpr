@@ -107,10 +107,10 @@ integerPower(long integer1, long integer2, int *error_code) const
 
   errno = 0;
 
-  if (integer2 < 0.0)
-    real = 1.0/pow((double) integer1, (double) -integer2);
+  if (integer2 < 0)
+    real = 1.0/pow(double(integer1), double(-integer2));
   else
-    real = pow((double) integer1, (double) integer2);
+    real = pow(double(integer1), double(integer2));
 
   if (errno != 0) {
     *error_code = int(CExprErrorType::POWER_FAILED);
@@ -129,9 +129,9 @@ long
 CExprIntegerValue::
 realToInteger(double real, int *error_code) const
 {
-  long integer = (long) real;
+  long integer = long(real);
 
-  double real1 = (double) integer;
+  double real1 = double(integer);
 
   if (fabs(real1 - real) >= 1.0)
     *error_code = int(CExprErrorType::REAL_TOO_BIG_FOR_INTEGER);

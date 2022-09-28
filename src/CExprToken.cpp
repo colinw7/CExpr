@@ -131,7 +131,7 @@ void
 CExprTokenStack::
 print(std::ostream &os) const
 {
-  uint len = stack_.size();
+  auto len = stack_.size();
 
   for (uint i = 0; i < len; ++i) {
     if (i > 0) os << " ";

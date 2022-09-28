@@ -177,7 +177,7 @@ bool
 CExpr::
 isValidVariableName(const std::string &name) const
 {
-  int len = name.size();
+  auto len = name.size();
 
   if (len == 0)
     return false;
@@ -185,7 +185,7 @@ isValidVariableName(const std::string &name) const
   if (name[0] != '_' && ! isalpha(name[0]))
     return false;
 
-  for (int i = 1; i < len; ++i)
+  for (uint i = 1; i < len; ++i)
     if (! isalnum(name[i]))
       return false;
 
@@ -347,7 +347,7 @@ class CExprPrintF : public CPrintF {
     return format();
   }
 
-  int  getInt     () const { return getLong(); }
+  int  getInt     () const { return int(getLong()); }
   long getLongLong() const { return getLong(); }
 
   long getLong() const {

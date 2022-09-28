@@ -21,8 +21,8 @@ class CExprFunctionObj {
 struct CExprFunctionArg {
   CExprFunctionArg() = default;
 
-  CExprFunctionArg(CExprValueType type) :
-   type(type) {
+  CExprFunctionArg(CExprValueType type1) :
+   type(type1) {
   }
 
   CExprValueType type { CExprValueType::NONE };
