@@ -10,9 +10,9 @@ class CExprTokenUnknown : public CExprTokenBase {
  public:
   CExprTokenUnknown() : CExprTokenBase(CExprTokenType::UNKNOWN) { }
 
-  //CExprTokenUnknown *dup() const { return new CExprTokenUnknown(); }
+  //CExprTokenUnknown *dup() const override { return new CExprTokenUnknown(); }
 
-  void print(std::ostream &os) const { os << "unknown"; }
+  void print(std::ostream &os) const override { os << "unknown"; }
 };
 
 class CExprTokenIdentifier : public CExprTokenBase {
@@ -23,9 +23,9 @@ class CExprTokenIdentifier : public CExprTokenBase {
 
   const std::string &getIdentifier() const { return identifier_; }
 
-  //CExprTokenIdentifier *dup() const { return new CExprTokenIdentifier(identifier_); }
+  //CExprTokenIdentifier *dup() const override { return new CExprTokenIdentifier(identifier_); }
 
-  void print(std::ostream &os) const { os << identifier_; }
+  void print(std::ostream &os) const override { os << identifier_; }
 
  private:
   std::string identifier_;
@@ -41,9 +41,9 @@ class CExprTokenOperator : public CExprTokenBase {
 
   CExprOpType getType() const { return type_; }
 
-  //CExprTokenOperator *dup() const { return new CExprTokenOperator(type_); }
+  //CExprTokenOperator *dup() const override { return new CExprTokenOperator(type_); }
 
-  void print(std::ostream &os) const;
+  void print(std::ostream &os) const override;
 
  private:
   CExprOpType type_ { CExprOpType::UNKNOWN };
@@ -59,9 +59,9 @@ class CExprTokenInteger : public CExprTokenBase {
 
   long getInteger() const { return integer_; }
 
-  //CExprTokenInteger *dup() const { return new CExprTokenInteger(integer_); }
+  //CExprTokenInteger *dup() const override { return new CExprTokenInteger(integer_); }
 
-  void print(std::ostream &os) const { os << integer_; }
+  void print(std::ostream &os) const override { os << integer_; }
 
  private:
   long integer_ { 0 };
@@ -77,9 +77,9 @@ class CExprTokenReal : public CExprTokenBase {
 
   double getReal() const { return real_; }
 
-  //CExprTokenReal *dup() const { return new CExprTokenReal(real_); }
+  //CExprTokenReal *dup() const override { return new CExprTokenReal(real_); }
 
-  void print(std::ostream &os) const { os << real_; }
+  void print(std::ostream &os) const override { os << real_; }
 
  private:
   double real_ { 0.0 };
@@ -95,9 +95,9 @@ class CExprTokenString : public CExprTokenBase {
 
   const std::string &getString() const { return str_; }
 
-  //CExprTokenString *dup() const { return new CExprTokenString(str_); }
+  //CExprTokenString *dup() const override { return new CExprTokenString(str_); }
 
-  void print(std::ostream &os) const { os << "\"" << str_ << "\""; }
+  void print(std::ostream &os) const override { os << "\"" << str_ << "\""; }
 
  private:
   std::string str_;
@@ -113,9 +113,9 @@ class CExprTokenFunction : public CExprTokenBase {
 
   CExprFunctionPtr getFunction() const { return function_; }
 
-  //CExprTokenFunction *dup() const { return new CExprTokenFunction(function_); }
+  //CExprTokenFunction *dup() const override { return new CExprTokenFunction(function_); }
 
-  void print(std::ostream &os) const;
+  void print(std::ostream &os) const override;
 
  private:
   CExprFunctionPtr function_;
@@ -131,9 +131,9 @@ class CExprTokenValue : public CExprTokenBase {
 
   CExprValuePtr getValue() const { return value_; }
 
-  //CExprTokenValue *dup() const { return new CExprTokenValue(value_); }
+  //CExprTokenValue *dup() const override { return new CExprTokenValue(value_); }
 
-  void print(std::ostream &os) const { os << *value_; }
+  void print(std::ostream &os) const override { os << *value_; }
 
  private:
   CExprValuePtr value_;
@@ -153,9 +153,9 @@ class CExprTokenBlock : public CExprTokenBase {
 
   const CExprTokenStack &stack() const { return stack_; }
 
-  //CExprTokenBlock *dup() const { return new CExprTokenBlock(stack_); }
+  //CExprTokenBlock *dup() const override { return new CExprTokenBlock(stack_); }
 
-  void print(std::ostream &os) const { stack_.print(os); }
+  void print(std::ostream &os) const override { stack_.print(os); }
 
  private:
   CExprTokenStack stack_;

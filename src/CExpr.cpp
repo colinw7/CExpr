@@ -20,8 +20,8 @@ CExpr()
 {
   parse_   = std::make_unique<CExprParse  >(this);
   interp_  = std::make_unique<CExprInterp >(this);
-  compile_ = std::make_unique<CExprCompile>(this);
-  execute_ = std::make_unique<CExprExecute>(this);
+  compile_ = std::make_shared<CExprCompile>(this);
+  execute_ = std::make_shared<CExprExecute>(this);
 
   operatorMgr_ = std::make_unique<CExprOperatorMgr>(this);
   variableMgr_ = std::make_unique<CExprVariableMgr>(this);
@@ -150,14 +150,11 @@ void
 CExpr::
 saveCompileState()
 {
-  auto *compile = compile_.release();
-  auto *execute = execute_.release();
+  compiles_.push_back(compile_);
+  executes_.push_back(execute_);
 
-  compiles_.push_back(compile);
-  executes_.push_back(execute);
-
-  compile_ = CExprCompileP(new CExprCompile(this));
-  execute_ = CExprExecuteP(new CExprExecute(this));
+  compile_ = std::make_shared<CExprCompile>(this);
+  execute_ = std::make_shared<CExprExecute>(this);
 }
 
 void
@@ -166,8 +163,8 @@ restoreCompileState()
 {
   assert(! compiles_.empty() && ! executes_.empty());
 
-  compile_ = CExprCompileP(compiles_.back());
-  execute_ = CExprExecuteP(executes_.back());
+  compile_ = compiles_.back();
+  execute_ = executes_.back();
 
   compiles_.pop_back();
   executes_.pop_back();
@@ -296,7 +293,7 @@ getOperatorName(CExprOpType type) const
 {
   auto op = operatorMgr_->getOperator(type);
 
-  if (op.isValid())
+  if (op)
     return op->getName();
   else
     return "<?>";
@@ -347,37 +344,37 @@ class CExprPrintF : public CPrintF {
     return format();
   }
 
-  int  getInt     () const { return int(getLong()); }
-  long getLongLong() const { return getLong(); }
+  int  getInt     () const override { return int(getLong()); }
+  long getLongLong() const override { return getLong(); }
 
-  long getLong() const {
+  long getLong() const override {
     auto value = nextValue();
 
     long l = 0;
 
-    if (value.isValid())
+    if (value)
       value->getIntegerValue(l);
 
     return l;
   }
 
-  double getDouble() const {
+  double getDouble() const override {
     auto value = nextValue();
 
     double r = 0.0;
 
-    if (value.isValid())
+    if (value)
       value->getRealValue(r);
 
     return r;
   }
 
-  std::string getString() const {
+  std::string getString() const override {
     auto value = nextValue();
 
     std::string s;
 
-    if (value.isValid())
+    if (value)
       value->getStringValue(s);
 
     return s;
@@ -385,7 +382,7 @@ class CExprPrintF : public CPrintF {
 
  private:
   CExprValuePtr nextValue() const {
-    if (iv_ >= values_.size() || ! values_[iv_].isValid()) return CExprValuePtr();
+    if (iv_ >= values_.size() || ! values_[iv_]) return CExprValuePtr();
     return values_[iv_++];
   }
 

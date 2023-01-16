@@ -22,7 +22,7 @@ class CExprIToken {
 
   CExprITokenType getIType() const { return itype_; }
 
-  //CExprIToken *dup() const;
+  //CExprIToken *dup() const override;
 
   const std::string &getIdentifier() const { return base()->getIdentifier(); }
   CExprOpType        getOperator  () const { return base()->getOperator  (); }
@@ -57,7 +57,7 @@ class CExprIToken {
   }
 
  private:
-  typedef std::vector<CExprITokenPtr> ITokenList;
+  using ITokenList = std::vector<CExprITokenPtr>;
 
   CExprITokenType itype_ { CExprITokenType::NONE };
   CExprTokenBaseP base_;
@@ -106,7 +106,7 @@ class CExprITokenStack {
   }
 
  private:
-  typedef std::vector<CExprITokenPtr> Stack;
+  using Stack = std::vector<CExprITokenPtr>;
 
   Stack stack_;
 };
@@ -126,7 +126,7 @@ class CExprInterp {
   CExprITokenPtr interpPTokenStack(const CExprTokenStack &stack);
 
  private:
-  typedef std::unique_ptr<CExprInterpImpl> CExprInterpImplP;
+  using CExprInterpImplP = std::unique_ptr<CExprInterpImpl>;
 
   CExpr*           expr_ { nullptr };
   CExprInterpImplP impl_;

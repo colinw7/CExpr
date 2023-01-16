@@ -67,7 +67,7 @@ class CExprTokenStack {
   }
 
  private:
-  typedef std::deque<CExprTokenBaseP> Stack;
+  using Stack = std::deque<CExprTokenBaseP>;
 
   Stack stack_;
 };

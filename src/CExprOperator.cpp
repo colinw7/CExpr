@@ -87,7 +87,7 @@ CExprOperatorMgr(CExpr *expr) :
 {
   for (uint i = 0; operator_data[i].name != 0; ++i)
     operator_map_[operator_data[i].type] =
-      CExprOperatorPtr(new CExprOperator(operator_data[i].type, operator_data[i].name));
+      std::make_shared<CExprOperator>(operator_data[i].type, operator_data[i].name);
 }
 
 CExprOperatorPtr

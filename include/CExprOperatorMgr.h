@@ -13,7 +13,7 @@ class CExprOperatorMgr {
   CExprOperatorPtr getOperator(CExprOpType type) const;
 
  private:
-  using OperatorMap = std::map<CExprOpType,CExprOperatorPtr>;
+  using OperatorMap = std::map<CExprOpType, CExprOperatorPtr>;
 
   CExpr*      expr_ { nullptr };
   OperatorMap operator_map_;

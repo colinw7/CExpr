@@ -7,21 +7,21 @@ class CExprIntegerValue : public CExprValueBase {
    integer_(integer) {
   }
 
-  CExprIntegerValue *dup() const {
+  CExprIntegerValue *dup() const override {
     return new CExprIntegerValue(integer_);
   }
 
-  bool getBooleanValue(bool        &b) const { b = (integer_ != 0) ; return true; }
-  bool getIntegerValue(long        &l) const { l = integer_        ; return true; }
-  bool getRealValue   (double      &r) const { r = double(integer_); return true; }
-  bool getStringValue (std::string &s) const;
+  bool getBooleanValue(bool        &b) const override { b = (integer_ != 0) ; return true; }
+  bool getIntegerValue(long        &l) const override { l = integer_        ; return true; }
+  bool getRealValue   (double      &r) const override { r = double(integer_); return true; }
+  bool getStringValue (std::string &s) const override;
 
-  void setIntegerValue(long l) { integer_ = l; }
+  void setIntegerValue(long l) override { integer_ = l; }
 
-  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const;
-  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const;
+  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const override;
+  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const override;
 
-  void print(std::ostream &os) const {
+  void print(std::ostream &os) const override {
     os << integer_;
   }
 

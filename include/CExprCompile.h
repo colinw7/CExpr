@@ -17,7 +17,7 @@ class CExprCompile {
   bool hasFunction(const std::string &name) const;
 
  private:
-  typedef std::unique_ptr<CExprCompileImpl> CExprCompileImplP;
+  using CExprCompileImplP = std::unique_ptr<CExprCompileImpl>;
 
   CExpr*            expr_ { nullptr };
   CExprCompileImplP impl_;

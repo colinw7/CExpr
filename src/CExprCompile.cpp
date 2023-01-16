@@ -55,7 +55,7 @@ CExprCompile::
 CExprCompile(CExpr *expr) :
  expr_(expr)
 {
-  impl_ = CExprCompileImplP(new CExprCompileImpl(expr));
+  impl_ = std::make_unique<CExprCompileImpl>(expr);
 }
 
 CExprCompile::
@@ -85,7 +85,7 @@ compileIToken(CExprITokenPtr itoken)
 {
   tokenStack_.clear();
 
-  if (! itoken.isValid())
+  if (! itoken)
     return tokenStack_;
 
   errorData_.setLastError("");
@@ -700,7 +700,7 @@ compileUnaryExpression(CExprITokenPtr itoken)
   if (num_children == 2) {
     auto itoken0 = itoken->getChild(0);
 
-    if (itoken0->base().isValid()) {
+    if (itoken0->base()) {
       auto op = itoken0->getOperator();
 
       switch (op) {
@@ -828,7 +828,7 @@ compilePostfixExpression(CExprITokenPtr itoken)
     CExprFunctionPtr function;
 
     for (auto &function1 : functions) {
-      if (! function1.isValid())
+      if (! function1)
         continue;
 
       function = function1;
@@ -839,7 +839,7 @@ compilePostfixExpression(CExprITokenPtr itoken)
         break;
     }
 
-    if (! function.isValid()) {
+    if (! function) {
       errorData_.setLastError("Invalid Function '" + identifier + "'");
       return;
     }

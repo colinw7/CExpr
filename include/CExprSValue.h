@@ -7,21 +7,21 @@ class CExprStringValue : public CExprValueBase {
    str_(str) {
   }
 
-  CExprStringValue *dup() const {
+  CExprStringValue *dup() const override {
     return new CExprStringValue(str_);
   }
 
-  bool getBooleanValue(bool        &b) const;
-  bool getIntegerValue(long        &l) const;
-  bool getRealValue   (double      &r) const;
-  bool getStringValue (std::string &s) const { s = str_; return true; }
+  bool getBooleanValue(bool        &b) const override;
+  bool getIntegerValue(long        &l) const override;
+  bool getRealValue   (double      &r) const override;
+  bool getStringValue (std::string &s) const override { s = str_; return true; }
 
-  void setStringValue(const std::string &s) { str_ = s; }
+  void setStringValue(const std::string &s) override { str_ = s; }
 
-  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const;
-  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const;
+  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const override;
+  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const override;
 
-  void print(std::ostream &os) const {
+  void print(std::ostream &os) const override {
     os << str_;
   }
 

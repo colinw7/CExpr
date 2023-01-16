@@ -15,7 +15,7 @@ class CExprExecute {
   bool executeCTokenStack(const CExprTokenStack &stack, CExprValuePtr &value);
 
  private:
-  typedef std::unique_ptr<CExprExecuteImpl> CExprExecuteImplP;
+  using CExprExecuteImplP = std::unique_ptr<CExprExecuteImpl>;
 
   CExpr*            expr_ { nullptr };
   CExprExecuteImplP impl_;

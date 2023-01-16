@@ -3,12 +3,13 @@
 
 #include <CExprTypes.h>
 #include <CStrUtil.h>
+#include <cassert>
 
 class CExprValueBase {
  public:
   virtual ~CExprValueBase() { }
 
-  virtual CExprValueBase *dup() const { return 0; }
+  virtual CExprValueBase *dup() const { return nullptr; }
 
   virtual bool getBooleanValue(bool        &) const { return false; }
   virtual bool getIntegerValue(long        &) const { return false; }
@@ -60,8 +61,8 @@ class CExprValueBase {
 
 class CExpr {
  public:
-  typedef std::vector<CExprFunctionPtr> Functions;
-  typedef std::vector<std::string>      StringArray;
+  using Functions   = std::vector<CExprFunctionPtr>;
+  using StringArray = std::vector<std::string>;
 
  public:
   static CExpr *instance();
@@ -136,12 +137,14 @@ class CExpr {
   void errorMsg(const std::string &msg) const;
 
  private:
-  using Compiles          = std::vector<CExprCompile *>;
-  using Executes          = std::vector<CExprExecute *>;
+  using CExprCompileP = std::shared_ptr<CExprCompile>;
+  using Compiles      = std::vector<CExprCompileP>;
+
+  using CExprExecuteP = std::shared_ptr<CExprExecute>;
+  using Executes      = std::vector<CExprExecuteP>;
+
   using CExprParseP       = std::unique_ptr<CExprParse>;
   using CExprInterpP      = std::unique_ptr<CExprInterp>;
-  using CExprCompileP     = std::unique_ptr<CExprCompile>;
-  using CExprExecuteP     = std::unique_ptr<CExprExecute>;
   using CExprOperatorMgrP = std::unique_ptr<CExprOperatorMgr>;
   using CExprVariableMgrP = std::unique_ptr<CExprVariableMgr>;
   using CExprFunctionMgrP = std::unique_ptr<CExprFunctionMgr>;

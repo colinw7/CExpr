@@ -18,7 +18,7 @@ class CExprTokenBase {
 
   CExprTokenType type() const { return type_; }
 
-  //virtual CExprTokenBase *dup() const = 0;
+  //virtual CExprTokenBase *dup() const override = 0;
 
   const std::string     &getIdentifier() const;
   CExprOpType            getOperator  () const;
@@ -37,6 +37,6 @@ class CExprTokenBase {
   CExprTokenType type_ { CExprTokenType::UNKNOWN };
 };
 
-typedef CRefPtr<CExprTokenBase> CExprTokenBaseP;
+using CExprTokenBaseP = std::shared_ptr<CExprTokenBase>;
 
 #endif

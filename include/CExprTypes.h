@@ -2,6 +2,7 @@
 #define CExprTypes_H
 
 #include <vector>
+#include <memory>
 
 enum class CExprOpType {
   UNKNOWN           = -1,
@@ -110,15 +111,13 @@ class CExprIToken;
 class CExprVariable;
 class CExprFunction;
 
-#include <CRefPtr.h>
+using CExprValuePtr    = std::shared_ptr<CExprValue>;
+using CExprITokenPtr   = std::shared_ptr<CExprIToken>;
+using CExprVariablePtr = std::shared_ptr<CExprVariable>;
+using CExprFunctionPtr = std::shared_ptr<CExprFunction>;
 
-typedef CRefPtr<CExprValue>    CExprValuePtr;
-typedef CRefPtr<CExprIToken>   CExprITokenPtr;
-typedef CRefPtr<CExprVariable> CExprVariablePtr;
-typedef CRefPtr<CExprFunction> CExprFunctionPtr;
+using CExprValueArray = std::vector<CExprValuePtr>;
 
-typedef std::vector<CExprValuePtr> CExprValueArray;
-
-typedef CExprValuePtr (*CExprFunctionProc)(CExpr *expr, const CExprValueArray &values);
+using CExprFunctionProc = CExprValuePtr (*)(CExpr *expr, const CExprValueArray &values);
 
 #endif

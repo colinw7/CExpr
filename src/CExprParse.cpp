@@ -62,7 +62,7 @@ CExprParse::
 CExprParse(CExpr *expr) :
  expr_(expr)
 {
-  impl_ = CExprParseImplP(new CExprParseImpl(expr));
+  impl_ = std::make_unique<CExprParseImpl>(expr);
 }
 
 CExprParse::
@@ -175,7 +175,7 @@ parseLine(CExprTokenStack &stack, const std::string &line, uint &i)
 
     if      (CExprOperator::isOperatorChar(line[i])) {
       CExprOpType lastOpType =
-       (lastPToken.isValid() && lastPToken->type() == CExprTokenType::OPERATOR ?
+       (lastPToken && lastPToken->type() == CExprTokenType::OPERATOR ?
         lastPToken->getOperator() : CExprOpType::UNKNOWN);
 
       if (lastPTokenType == CExprTokenType::UNKNOWN || lastOpType != CExprOpType::UNKNOWN) {
@@ -187,7 +187,7 @@ parseLine(CExprTokenStack &stack, const std::string &line, uint &i)
       else
         ptoken = readOperator(line, &i);
 
-      if (ptoken.isValid() && ptoken->type() == CExprTokenType::OPERATOR) {
+      if (ptoken && ptoken->type() == CExprTokenType::OPERATOR) {
         if      (ptoken->getOperator() == CExprOpType::OPEN_RBRACKET) {
           stack.addToken(ptoken);
 
@@ -217,7 +217,7 @@ parseLine(CExprTokenStack &stack, const std::string &line, uint &i)
       return false;
     }
 
-    if (! ptoken.isValid()) {
+    if (! ptoken) {
       parseError("Invalid Token", line, i);
       return false;
     }

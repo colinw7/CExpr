@@ -57,7 +57,7 @@ class CExprValue {
   }
 
  private:
-  typedef std::unique_ptr<CExprValueBase> CExprValueBaseP;
+  using CExprValueBaseP = std::unique_ptr<CExprValueBase>;
 
   CExprValueType  type_ { CExprValueType::NONE };
   CExprValueBaseP base_;

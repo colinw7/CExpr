@@ -83,7 +83,7 @@ class CExprFunction {
 
 class CExprProcFunction : public CExprFunction {
  public:
-  typedef std::vector<CExprFunctionArg> Args;
+  using Args = std::vector<CExprFunctionArg>;
 
  public:
   CExprProcFunction(const std::string &name, const Args &args, CExprFunctionProc proc);
@@ -108,7 +108,7 @@ class CExprProcFunction : public CExprFunction {
 
 class CExprObjFunction : public CExprFunction {
  public:
-  typedef std::vector<CExprFunctionArg> Args;
+  using Args = std::vector<CExprFunctionArg>;
 
  public:
   CExprObjFunction(const std::string &name, const Args &args, CExprFunctionObj *proc);
@@ -133,7 +133,7 @@ class CExprObjFunction : public CExprFunction {
 
 class CExprUserFunction : public CExprFunction {
  public:
-  typedef std::vector<std::string> Args;
+  using Args = std::vector<std::string>;
 
  public:
   CExprUserFunction(const std::string &name, const Args &args, const std::string &proc);

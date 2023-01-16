@@ -5,7 +5,7 @@
 
 class CExprOperator;
 
-typedef CRefPtr<CExprOperator> CExprOperatorPtr;
+using CExprOperatorPtr = std::shared_ptr<CExprOperator>;
 
 class CExprOperator {
  public:

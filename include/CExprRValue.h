@@ -7,21 +7,21 @@ class CExprRealValue : public CExprValueBase {
    real_(real) {
   }
 
-  CExprRealValue *dup() const {
+  CExprRealValue *dup() const override {
     return new CExprRealValue(real_);
   }
 
-  bool getBooleanValue(bool        &b) const { b = (real_ != 0); return true; }
-  bool getIntegerValue(long        &l) const { l = long(real_) ; return true; }
-  bool getRealValue   (double      &r) const { r = real_       ; return true; }
-  bool getStringValue (std::string &s) const;
+  bool getBooleanValue(bool        &b) const override { b = (real_ != 0); return true; }
+  bool getIntegerValue(long        &l) const override { l = long(real_) ; return true; }
+  bool getRealValue   (double      &r) const override { r = real_       ; return true; }
+  bool getStringValue (std::string &s) const override;
 
-  void setRealValue(double r) { real_ = r; }
+  void setRealValue(double r) override { real_ = r; }
 
-  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const;
-  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const;
+  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const override;
+  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const override;
 
-  void print(std::ostream &os) const {
+  void print(std::ostream &os) const override {
     os << real_;
   }
 

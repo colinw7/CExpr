@@ -20,7 +20,7 @@ class CExprParse {
   bool skipExpression(const std::string &str, uint &i);
 
  private:
-  typedef std::unique_ptr<CExprParseImpl> CExprParseImplP;
+  using CExprParseImplP = std::unique_ptr<CExprParseImpl>;
 
   CExpr*          expr_ { nullptr };
   CExprParseImplP impl_;

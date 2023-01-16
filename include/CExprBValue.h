@@ -7,21 +7,25 @@ class CExprBooleanValue : public CExprValueBase {
    boolean_(boolean) {
   }
 
-  CExprBooleanValue *dup() const {
+  CExprBooleanValue *dup() const override {
     return new CExprBooleanValue(boolean_);
   }
 
-  bool getBooleanValue(bool        &b) const { b = boolean_;                      return true; }
-  bool getIntegerValue(long        &l) const { l = (boolean_ ?    1   :     0  ); return true; }
-  bool getRealValue   (double      &r) const { r = (boolean_ ?    1.0 :     0.0); return true; }
-  bool getStringValue (std::string &s) const { s = (boolean_ ? "true" : "false"); return true; }
+  bool getBooleanValue(bool        &b) const override {
+    b = boolean_;                      return true; }
+  bool getIntegerValue(long        &l) const override {
+    l = (boolean_ ?    1   :     0  ); return true; }
+  bool getRealValue   (double      &r) const override {
+    r = (boolean_ ?    1.0 :     0.0); return true; }
+  bool getStringValue (std::string &s) const override {
+    s = (boolean_ ? "true" : "false"); return true; }
 
-  void setBooleanValue(bool b) { boolean_ = b; }
+  void setBooleanValue(bool b) override { boolean_ = b; }
 
-  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const;
-  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const;
+  CExprValuePtr execUnaryOp (CExpr *expr, CExprOpType op) const override;
+  CExprValuePtr execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const override;
 
-  void print(std::ostream &os) const {
+  void print(std::ostream &os) const override {
     os << (boolean_ ? "true" : "false");
   }
 

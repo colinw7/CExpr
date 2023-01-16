@@ -12,8 +12,8 @@ createVariable(const std::string &name, CExprValuePtr value)
 {
   auto variable = getVariable(name);
 
-  if (! variable.isValid()) {
-    variable = CExprVariablePtr(new CExprVariable(name, value));
+  if (! variable) {
+    variable = std::make_shared<CExprVariable>(name, value);
 
     addVariable(variable);
   }

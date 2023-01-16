@@ -3,6 +3,7 @@
 
 class CExprVariable {
  public:
+  CExprVariable(const std::string &name, const CExprValuePtr &value);
  ~CExprVariable();
 
   const std::string &name () const { return name_ ; }
@@ -18,11 +19,6 @@ class CExprVariable {
   CExprValueType getValueType() const;
 
  private:
-  CExprVariable(const std::string &name, const CExprValuePtr &value);
-
- private:
-  friend class CExprVariableMgr;
-
   std::string   name_;
   CExprValuePtr value_;
 };

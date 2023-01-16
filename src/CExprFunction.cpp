@@ -100,8 +100,7 @@ CExprFunctionMgr::
 addFunctions()
 {
   for (uint i = 0; builtinFns[i].proc; ++i) {
-    CExprFunctionPtr function =
-      addProcFunction(builtinFns[i].name, builtinFns[i].args, builtinFns[i].proc);
+    auto function = addProcFunction(builtinFns[i].name, builtinFns[i].args, builtinFns[i].proc);
 
     function->setBuiltin(true);
   }
@@ -136,7 +135,7 @@ addProcFunction(const std::string &name, const std::string &argsStr, CExprFuncti
 
   (void) parseArgs(argsStr, args, variableArgs);
 
-  CExprFunctionPtr function(new CExprProcFunction(name, args, proc));
+  auto function = std::make_shared<CExprProcFunction>(name, args, proc);
 
   function->setVariableArgs(variableArgs);
 
@@ -158,7 +157,7 @@ addObjFunction(const std::string &name, const std::string &argsStr, CExprFunctio
 
   (void) parseArgs(argsStr, args, variableArgs);
 
-  CExprFunctionPtr function(new CExprObjFunction(name, args, proc));
+  auto function = std::make_shared<CExprObjFunction>(name, args, proc);
 
   function->setVariableArgs(variableArgs);
 
@@ -177,7 +176,7 @@ CExprFunctionMgr::
 addUserFunction(const std::string &name, const std::vector<std::string> &args,
                 const std::string &proc)
 {
-  CExprFunctionPtr function(new CExprUserFunction(name, args, proc));
+  auto function = std::make_shared<CExprUserFunction>(name, args, proc);
 
   removeFunction(name);
 
@@ -199,7 +198,7 @@ void
 CExprFunctionMgr::
 removeFunction(CExprFunctionPtr function)
 {
-  if (function.isValid())
+  if (function)
     functions_.remove(function);
 }
 
@@ -378,7 +377,7 @@ exec(CExpr *expr, const CExprValueArray &values)
 
     auto var = expr->getVariable(arg);
 
-    if (var.isValid()) {
+    if (var) {
       varValues[arg] = var->getValue();
 
       var->setValue(values[i]);
@@ -409,7 +408,7 @@ exec(CExpr *expr, const CExprValueArray &values)
     const auto &varName = v.first;
     auto        value1  = v.second;
 
-    if (value1.isValid()) {
+    if (value1) {
       auto var = expr->getVariable(varName);
 
       var->setValue(value1);
