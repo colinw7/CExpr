@@ -119,5 +119,6 @@ using CExprFunctionPtr = std::shared_ptr<CExprFunction>;
 using CExprValueArray = std::vector<CExprValuePtr>;
 
 using CExprFunctionProc = CExprValuePtr (*)(CExpr *expr, const CExprValueArray &values);
+using CExprVariableProc = CExprValuePtr (*)(CExprValuePtr, bool);
 
 #endif

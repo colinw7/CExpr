@@ -68,7 +68,8 @@ class CExpr {
   static CExpr *instance();
 
   CExpr();
- ~CExpr();
+
+  virtual ~CExpr();
 
   bool getQuiet() const { return quiet_; }
   void setQuiet(bool b) { quiet_ = b; }
@@ -110,6 +111,8 @@ class CExpr {
   CExprVariablePtr createRealVariable   (const std::string &name, double x);
   CExprVariablePtr createIntegerVariable(const std::string &name, long l);
   CExprVariablePtr createStringVariable (const std::string &name, const std::string &str);
+
+  CExprVariablePtr createUserVariable(const std::string &name, CExprVariableObj *obj);
 
   CExprFunctionPtr getFunction (const std::string &name);
   void             getFunctions(const std::string &name, Functions &functions);

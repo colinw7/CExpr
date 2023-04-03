@@ -13,11 +13,11 @@
 class Trace {
  public:
   Trace(const std::string &name) : name_(name) {
-    std::cerr << ">" << name_ << std::endl;
+    std::cerr << ">" << name_ << "\n";
   }
 
  ~Trace() {
-    std::cerr << "<" << name_ << std::endl;
+    std::cerr << "<" << name_ << "\n";
   }
 
  private:
@@ -1451,7 +1451,7 @@ printTrackBack(std::ostream &os)
     if (i < size)
       os << " ";
 
-    os << itoken;
+    os << *itoken;
   }
 
   auto itoken = itokenStack_.getToken(0);
@@ -1460,7 +1460,7 @@ printTrackBack(std::ostream &os)
     if (size > 1)
       os << " ";
 
-    os << ">>" << itoken << "<<";
+    os << ">>" << *itoken << "<<";
   }
 
   size = ptokenStack_.getNumTokens();
@@ -1471,7 +1471,7 @@ printTrackBack(std::ostream &os)
     os << " " << ptoken;
   }
 
-  os << std::endl;
+  os << "\n";
 }
 
 #ifdef CEXPR_DEBUG
@@ -1487,7 +1487,7 @@ printTypeIToken(std::ostream &os, CExprITokenPtr itoken)
 
   printTypeIToken1(os, itoken);
 
-  os << std::endl;
+  os << "\n";
 }
 
 void

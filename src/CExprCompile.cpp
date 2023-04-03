@@ -839,36 +839,37 @@ compilePostfixExpression(CExprITokenPtr itoken)
         break;
     }
 
-    if (! function) {
+    if (function) {
+      uint function_num_args = function->numArgs();
+
+      for (uint i = num_args; i < function_num_args; ++i) {
+        if (! (uint(function->argType(i)) & uint(CExprValueType::NUL)))
+          break;
+
+        stackDummyValue();
+
+        ++num_args;
+      }
+
+      if (function->isVariableArgs()) {
+        if (function_num_args > num_args) {
+          errorData_.setLastError("Function called with too few arguments");
+          return;
+        }
+      }
+      else {
+        if (function_num_args != num_args) {
+          errorData_.setLastError("Function called with wrong number of arguments");
+          return;
+        }
+      }
+
+      stackFunction(function);
+    }
+    else {
       errorData_.setLastError("Invalid Function '" + identifier + "'");
       return;
     }
-
-    uint function_num_args = function->numArgs();
-
-    for (uint i = num_args; i < function_num_args; ++i) {
-      if (! (uint(function->argType(i)) & uint(CExprValueType::NUL)))
-        break;
-
-      stackDummyValue();
-
-      ++num_args;
-    }
-
-    if (function->isVariableArgs()) {
-      if (function_num_args > num_args) {
-        errorData_.setLastError("Function called with too few arguments");
-        return;
-      }
-    }
-    else {
-      if (function_num_args != num_args) {
-        errorData_.setLastError("Function called with wrong number of arguments");
-        return;
-      }
-    }
-
-    stackFunction(function);
   }
   else if (op == CExprOpType::INCREMENT) {
     compilePostfixExpression(itoken->getChild(0));

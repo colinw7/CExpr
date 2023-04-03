@@ -413,7 +413,7 @@ parseError(const std::string &msg, const std::string &line, uint i)
   std::stringstream ostr;
 
   ostr << msg << " \"" << line.substr(0, i - 1) << "#" << line[i] << "#" <<
-          (i < line.size() ? line.substr(i + 1) : "") << std::endl;
+          (i < line.size() ? line.substr(i + 1) : "") << "\n";
 
   for (uint j = 0; j < i + msg.size() + 1; j++)
     ostr << " ";
@@ -546,8 +546,6 @@ readStringChars(const std::string &str, uint *i, bool process, std::string &str1
 
     uint j = *i;
 
-    str1 += str[*i];
-
     while (*i < str.size()) {
       if      (str[*i] == '\\' && *i < str.size() - 1)
         (*i)++;
@@ -614,7 +612,7 @@ replaceEscapeCodes(const std::string &str)
 
       case 'x': {
         if (i < len - 1 && ::isxdigit(str[i + 1])) {
-          int hex_value = 0;
+          uint hex_value = 0;
 
           ++i;
 
@@ -652,7 +650,7 @@ replaceEscapeCodes(const std::string &str)
 
       case '0': {
         if (i < len - 1 && CStrUtil::isodigit(str[i + 1])) {
-          int oct_value = 0;
+          uint oct_value = 0;
 
           ++i;
 

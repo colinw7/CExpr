@@ -5,6 +5,8 @@
 
 class CExpr;
 
+class CExprVariableObj;
+
 class CExprVariableMgr {
  public:
   CExprVariableMgr(CExpr *expr);
@@ -13,6 +15,8 @@ class CExprVariableMgr {
   CExpr *expr() const { return expr_; }
 
   CExprVariablePtr createVariable(const std::string &name, CExprValuePtr value);
+
+  CExprVariablePtr createUserVariable(const std::string &name, CExprVariableObj *obj);
 
   CExprVariablePtr getVariable(const std::string &name) const;
 

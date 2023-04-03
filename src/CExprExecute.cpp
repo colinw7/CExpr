@@ -94,7 +94,7 @@ executeCTokenStack(const CExprTokenStack &stack, CExprValueArray &values)
       return false;
 
     if (expr_->getDebug())
-      std::cerr << "EToken Stack:" << etokenStack_ << std::endl;
+      std::cerr << "EToken Stack:" << etokenStack_ << "\n";
   }
 
   std::deque<CExprValuePtr> values1;
@@ -591,7 +591,9 @@ etokenToValue(const CExprTokenBaseP &etoken)
 {
   switch (etoken->type()) {
     case CExprTokenType::IDENTIFIER: {
-      auto variable = expr_->getVariable(etoken->getIdentifier());
+      auto varName = etoken->getIdentifier();
+
+      auto variable = expr_->getVariable(varName);
 
       if (variable)
         return variable->getValue();
@@ -640,7 +642,7 @@ stackBlock()
 {
   CExprTokenStack stack;
 
-  int brackets = 1;
+  long brackets = 1;
 
   while (ctokenPos_ < numCTokens_) {
     auto ctoken = ctokenStack_.getToken(ctokenPos_++);

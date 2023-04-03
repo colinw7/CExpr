@@ -47,8 +47,12 @@ execBinaryOp(CExpr *expr, CExprValuePtr rhs, CExprOpType op) const
       else
         return expr->createIntegerValue(integer);
     }
-    case CExprOpType::TIMES:
-      return expr->createIntegerValue(integer_ * irhs);
+    case CExprOpType::TIMES: {
+      long res = integer_*irhs;
+      //assert(res/irhs == integer_);
+
+      return expr->createIntegerValue(res);
+    }
     case CExprOpType::DIVIDE: {
       // divide by zero
       if (irhs == 0) return CExprValuePtr();

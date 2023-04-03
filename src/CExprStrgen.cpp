@@ -38,9 +38,11 @@ CExprInsertEscapeCodes(const std::string &str)
       case '\033': str1 += 'e' ; break;
 
       default: {
-        int digit1 = c/64;
-        int digit2 = (c - digit1*64)/8;
-        int digit3 = c - digit1*64 - digit2*8;
+        auto c1 = uchar(c);
+
+        uint digit1 = c1/64;
+        uint digit2 = (c1 - digit1*64)/8;
+        uint digit3 = c1 - digit1*64 - digit2*8;
 
         str1 += char('0' + digit1);
         str1 += char('0' + digit2);

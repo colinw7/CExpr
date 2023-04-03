@@ -80,7 +80,7 @@ parseLine(const std::string &line)
   auto pstack = parse_->parseLine(line);
 
   if (getDebug())
-    std::cerr << "PTokenStack:" << pstack << std::endl;
+    std::cerr << "PTokenStack:" << pstack << "\n";
 
   return pstack;
 }
@@ -91,8 +91,8 @@ interpPTokenStack(const CExprTokenStack &stack)
 {
   auto itoken = interp_->interpPTokenStack(stack);
 
-  if (getDebug())
-    std::cerr << "IToken:" << itoken << std::endl;
+  if (getDebug() && itoken)
+    std::cerr << "IToken:" << *itoken << "\n";
 
   return itoken;
 }
@@ -104,7 +104,7 @@ compileIToken(CExprITokenPtr itoken)
   auto cstack = compile_->compileIToken(itoken);
 
   if (getDebug())
-    std::cerr << "CTokenStack:" << cstack << std::endl;
+    std::cerr << "CTokenStack:" << cstack << "\n";
 
   return cstack;
 }
@@ -126,8 +126,8 @@ executeCTokenStack(const CExprTokenStack &stack, CExprValueArray &values)
   if (getDebug()) {
     std::cerr << "Values:";
     for (uint i = 0; i < values.size(); ++i)
-      std::cerr << " " << values[i] << std::endl;
-    std::cerr << std::endl;
+      std::cerr << " " << *values[i] << "\n";
+    std::cerr << "\n";
   }
 
   return true;
@@ -140,8 +140,8 @@ executeCTokenStack(const CExprTokenStack &stack, CExprValuePtr &value)
   if (! execute_->executeCTokenStack(stack, value))
     return false;
 
-  if (getDebug())
-    std::cerr << "Value: " << value << std::endl;
+  if (getDebug() && value)
+    std::cerr << "Value: " << *value << "\n";
 
   return true;
 }
@@ -222,6 +222,13 @@ CExpr::
 createStringVariable(const std::string &name, const std::string &str)
 {
   return variableMgr_->createVariable(name, createStringValue(str));
+}
+
+CExprVariablePtr
+CExpr::
+createUserVariable(const std::string &name, CExprVariableObj *obj)
+{
+  return variableMgr_->createUserVariable(name, obj);
 }
 
 void
@@ -406,5 +413,5 @@ CExpr::
 errorMsg(const std::string &msg) const
 {
   if (! getQuiet())
-    std::cerr << msg << std::endl;
+    std::cerr << msg << "\n";
 }

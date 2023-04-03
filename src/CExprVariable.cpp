@@ -25,6 +25,23 @@ createVariable(const std::string &name, CExprValuePtr value)
 
 CExprVariablePtr
 CExprVariableMgr::
+createUserVariable(const std::string &name, CExprVariableObj *obj)
+{
+  auto variable = getVariable(name);
+
+  if (! variable) {
+    variable = std::make_shared<CExprVariable>(name, CExprValuePtr());
+
+    addVariable(variable);
+  }
+
+  variable->setObj(obj);
+
+  return variable;
+}
+
+CExprVariablePtr
+CExprVariableMgr::
 getVariable(const std::string &name) const
 {
   for (const auto &var : variables_)
@@ -69,36 +86,49 @@ CExprVariable::
 {
 }
 
+CExprValuePtr
+CExprVariable::
+getValue() const
+{
+  if (obj_)
+    return obj_->get();
+  else
+    return value_;
+}
+
 void
 CExprVariable::
 setValue(const CExprValuePtr &value)
 {
-  value_ = value;
+  if (obj_)
+    obj_->set(value);
+  else
+    value_ = value;
 }
 
 void
 CExprVariable::
 setRealValue(CExpr *expr, double r)
 {
-  if (value_->isRealValue())
+  if (! obj_ && value_->isRealValue())
     value_->setRealValue(r);
   else
-    value_ = expr->createRealValue(r);
+    setValue(expr->createRealValue(r));
 }
 
 void
 CExprVariable::
-setIntegerValue(CExpr *expr, int i)
+setIntegerValue(CExpr *expr, long i)
 {
-  if (value_->isIntegerValue())
+  if (! obj_ && value_->isIntegerValue())
     value_->setIntegerValue(i);
   else
-    value_ = expr->createIntegerValue(i);
+    setValue(expr->createIntegerValue(i));
 }
 
 CExprValueType
 CExprVariable::
 getValueType() const
 {
-  return value_->getType();
+  return getValue()->getType();
 }
