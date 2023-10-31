@@ -95,7 +95,7 @@ realPower(double real1, double real2, int *error_code) const
     return CMathGen::getNaN();
   }
 
-  bool is_int = (long(real2) == real2);
+  bool is_int = (double(long(real2)) == real2);
 
   if (real1 < 0.0 && ! is_int) {
     *error_code = int(CExprErrorType::NON_INTEGER_POWER_OF_NEGATIVE);

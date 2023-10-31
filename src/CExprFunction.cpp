@@ -79,7 +79,7 @@ builtinFns[] = {
   { "asin" , "r" , CExprFunctionASin  },
   { "acos" , "r" , CExprFunctionACos  },
   { "atan" , "r" , CExprFunctionATan  },
-  { ""     , ""  , 0                  }
+  { ""     , ""  , nullptr            }
 };
 
 //------

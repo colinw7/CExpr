@@ -387,10 +387,8 @@ executeBinaryOperator(CExprOpType type)
   }
 
   if (convReal) {
-    if (! value1->isRealValue())
-      value1 = CExprValuePtr(value1->dup());
-    if (! value2->isRealValue())
-      value2 = CExprValuePtr(value2->dup());
+    if (! value1->isRealValue()) value1 = CExprValuePtr(value1->dup());
+    if (! value2->isRealValue()) value2 = CExprValuePtr(value2->dup());
 
     if (! value1->convToReal()) return false;
     if (! value2->convToReal()) return false;

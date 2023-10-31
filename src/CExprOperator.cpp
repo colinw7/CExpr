@@ -32,51 +32,51 @@ struct CExprOperatorData {
 
 static CExprOperatorData
 operator_data[] = {
-  { CExprOpType::OPEN_RBRACKET    , "("  , },
-  { CExprOpType::CLOSE_RBRACKET   , ")"  , },
-  { CExprOpType::LOGICAL_NOT      , "!"  , },
-  { CExprOpType::BIT_NOT          , "~"  , },
-  { CExprOpType::INCREMENT        , "++" , },
-  { CExprOpType::DECREMENT        , "--" , },
-  { CExprOpType::UNARY_PLUS       , "+"  , },
-  { CExprOpType::UNARY_MINUS      , "-"  , },
-  { CExprOpType::POWER            , "**" , },
-  { CExprOpType::TIMES            , "*"  , },
-  { CExprOpType::DIVIDE           , "/"  , },
-  { CExprOpType::MODULUS          , "%"  , },
-  { CExprOpType::PLUS             , "+"  , },
-  { CExprOpType::MINUS            , "-"  , },
-  { CExprOpType::BIT_LSHIFT       , "<<" , },
-  { CExprOpType::BIT_RSHIFT       , ">>" , },
-  { CExprOpType::LESS             , "<"  , },
-  { CExprOpType::LESS_EQUAL       , "<=" , },
-  { CExprOpType::GREATER          , ">"  , },
-  { CExprOpType::GREATER_EQUAL    , ">=" , },
-  { CExprOpType::EQUAL            , "==" , },
-  { CExprOpType::NOT_EQUAL        , "!=" , },
-  { CExprOpType::APPROX_EQUAL     , "~=" , },
-  { CExprOpType::BIT_AND          , "&"  , },
-  { CExprOpType::BIT_XOR          , "^"  , },
-  { CExprOpType::BIT_OR           , "|"  , },
-  { CExprOpType::LOGICAL_AND      , "&&" , },
-  { CExprOpType::LOGICAL_OR       , "||" , },
-  { CExprOpType::QUESTION         , "?"  , },
-  { CExprOpType::COLON            , ":"  , },
-  { CExprOpType::EQUALS           , "="  , },
-  { CExprOpType::PLUS_EQUALS      , "+=" , },
-  { CExprOpType::MINUS_EQUALS     , "-=" , },
-  { CExprOpType::TIMES_EQUALS     , "*=" , },
-  { CExprOpType::DIVIDE_EQUALS    , "/=" , },
-  { CExprOpType::MODULUS_EQUALS   , "%=" , },
-  { CExprOpType::BIT_AND_EQUALS   , "&=" , },
-  { CExprOpType::BIT_XOR_EQUALS   , "^=" , },
-  { CExprOpType::BIT_OR_EQUALS    , "|=" , },
-  { CExprOpType::BIT_LSHIFT_EQUALS, "<<=", },
-  { CExprOpType::BIT_RSHIFT_EQUALS, ">>=", },
-  { CExprOpType::COMMA            , ","  , },
-  { CExprOpType::START_BLOCK      , "{"  , },
-  { CExprOpType::END_BLOCK        , "}"  , },
-  { CExprOpType::UNKNOWN          , 0    , }
+  { CExprOpType::OPEN_RBRACKET    , "("    , },
+  { CExprOpType::CLOSE_RBRACKET   , ")"    , },
+  { CExprOpType::LOGICAL_NOT      , "!"    , },
+  { CExprOpType::BIT_NOT          , "~"    , },
+  { CExprOpType::INCREMENT        , "++"   , },
+  { CExprOpType::DECREMENT        , "--"   , },
+  { CExprOpType::UNARY_PLUS       , "+"    , },
+  { CExprOpType::UNARY_MINUS      , "-"    , },
+  { CExprOpType::POWER            , "**"   , },
+  { CExprOpType::TIMES            , "*"    , },
+  { CExprOpType::DIVIDE           , "/"    , },
+  { CExprOpType::MODULUS          , "%"    , },
+  { CExprOpType::PLUS             , "+"    , },
+  { CExprOpType::MINUS            , "-"    , },
+  { CExprOpType::BIT_LSHIFT       , "<<"   , },
+  { CExprOpType::BIT_RSHIFT       , ">>"   , },
+  { CExprOpType::LESS             , "<"    , },
+  { CExprOpType::LESS_EQUAL       , "<="   , },
+  { CExprOpType::GREATER          , ">"    , },
+  { CExprOpType::GREATER_EQUAL    , ">="   , },
+  { CExprOpType::EQUAL            , "=="   , },
+  { CExprOpType::NOT_EQUAL        , "!="   , },
+  { CExprOpType::APPROX_EQUAL     , "~="   , },
+  { CExprOpType::BIT_AND          , "&"    , },
+  { CExprOpType::BIT_XOR          , "^"    , },
+  { CExprOpType::BIT_OR           , "|"    , },
+  { CExprOpType::LOGICAL_AND      , "&&"   , },
+  { CExprOpType::LOGICAL_OR       , "||"   , },
+  { CExprOpType::QUESTION         , "?"    , },
+  { CExprOpType::COLON            , ":"    , },
+  { CExprOpType::EQUALS           , "="    , },
+  { CExprOpType::PLUS_EQUALS      , "+="   , },
+  { CExprOpType::MINUS_EQUALS     , "-="   , },
+  { CExprOpType::TIMES_EQUALS     , "*="   , },
+  { CExprOpType::DIVIDE_EQUALS    , "/="   , },
+  { CExprOpType::MODULUS_EQUALS   , "%="   , },
+  { CExprOpType::BIT_AND_EQUALS   , "&="   , },
+  { CExprOpType::BIT_XOR_EQUALS   , "^="   , },
+  { CExprOpType::BIT_OR_EQUALS    , "|="   , },
+  { CExprOpType::BIT_LSHIFT_EQUALS, "<<="  , },
+  { CExprOpType::BIT_RSHIFT_EQUALS, ">>="  , },
+  { CExprOpType::COMMA            , ","    , },
+  { CExprOpType::START_BLOCK      , "{"    , },
+  { CExprOpType::END_BLOCK        , "}"    , },
+  { CExprOpType::UNKNOWN          , nullptr, }
 };
 
 //------
@@ -85,7 +85,7 @@ CExprOperatorMgr::
 CExprOperatorMgr(CExpr *expr) :
  expr_(expr)
 {
-  for (uint i = 0; operator_data[i].name != 0; ++i)
+  for (uint i = 0; operator_data[i].name != nullptr; ++i)
     operator_map_[operator_data[i].type] =
       std::make_shared<CExprOperator>(operator_data[i].type, operator_data[i].name);
 }
@@ -116,5 +116,5 @@ isOperatorChar(char c)
 {
   static char operator_chars [] = "()!~*/%+-<>=!&^|?:,";
 
-  return (strchr(operator_chars, c) != 0);
+  return (strchr(operator_chars, c) != nullptr);
 }
